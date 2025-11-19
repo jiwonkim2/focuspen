@@ -320,6 +320,42 @@
       font-size: 10px;
       color: #9ca3af;
     }
+    .chat-panel {
+  max-height: 260px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  padding-right: 8px;
+  overflow-y: auto;
+}
+
+/* 공통 말풍선 */
+.chat-msg {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+
+/* 사용자 말풍선 (오른쪽) */
+.chat-msg.user {
+  margin-left: auto;
+  background: #111827;
+  color: #f9fafb;
+  border-bottom-right-radius: 4px;
+}
+
+/* 봇 말풍선 (왼쪽) */
+.chat-msg.bot {
+  margin-right: auto;
+  background: #f9fafb;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-bottom-left-radius: 4px;
+}
+
 
     .board {
     flex: 1;
@@ -485,6 +521,9 @@
             <span class="select-arrow">▼</span>
           </div>
         </div>
+        <div class="chat-panel" id="chatPanel">
+  <!-- 여기로 대화 말풍선이 쌓임 -->
+</div>
 
         <div class="board"></div>
 
@@ -628,6 +667,39 @@
   function handleSendMessage() {
   const text = messageInput.value.trim();
   if (!text) return;
+  // ==== CHAT PANEL ====
+const chatPanel = document.getElementById("chatPanel");
+
+function addChatMessage(sender, text) {
+  if (!chatPanel) return;
+  const msg = document.createElement("div");
+  msg.className = `chat-msg ${sender}`;
+  msg.textContent = text;
+  chatPanel.appendChild(msg);
+  chatPanel.scrollTop = chatPanel.scrollHeight;
+}
+function getBotReply(userText) {
+  const t = userText.toLowerCase();
+
+  // 집 가고 싶다 / 귀찮다 / 하기 싫다 → 정신차려 멘트
+  if (t.includes("집") || t.includes("가기 싫") || t.includes("집가고") ||
+      t.includes("귀찮") || t.includes("하기 싫")) {
+    return `**정신 차리세요!** 😠
+
+방금 우리 브레인스토밍 아이디어들 진짜 잘 나오고 있었잖아요!
+지금은 글쓰기에 집중하는 시간이에요.
+
+집에 가고 싶은 마음은 너무 공감하지만,
+잠깐만 그 마음을 옆에 내려두고
+지금 이야기하던 아이디어 중에서
+제일 마음에 드는 방향을 하나 골라서
+조금만 더 이어가 보면 어때요?`;
+  }
+
+  // 기본 답변
+  return "좋아요! 이 아이디어를 나중에 정리할 수 있도록 포스트잇으로 남겨둘게요. 비슷한 생각이 더 있으면 계속 말해줘!";
+}
+
 
   // 타이머가 켜져 있을 때만 허용
   if (!running) {
