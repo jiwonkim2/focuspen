@@ -114,52 +114,168 @@
       font-weight: 500;
     }
 
-    .sidebar.collapsed .step-label {
-      opacity: 0;
-    }
+  /* ========== SIDEBAR ========== */
 
-    .sidebar-toggle {
-      position: absolute;
-      right: -14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      font-size: 14px;
-    }
+.sidebar {
+  position: relative;
+  width: 220px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease;
+}
 
-    .sidebar.collapsed .sidebar-toggle {
-      transform: translateY(-50%) rotate(180deg);
-    }
+.sidebar.collapsed {
+  width: 72px;
+}
 
-    .next-btn {
-      margin-top: 32px;
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: none;
-      background: #2563eb;
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-    }
+.sidebar-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: #9ca3af;
+  margin-bottom: 24px;
+}
 
-    .sidebar.collapsed .next-btn span {
-      display: none;
-    }
+.stepper {
+  flex: 1;
+  position: relative;
+  padding-top: 4px;
+}
 
-    .sidebar.collapsed .next-btn::after {
-      content: "▶";
-    }
+/* 얇은 회색 세로줄 */
+.step-line {
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+/* 각 단계 */
+.step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+  padding-left: 16px;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+/* 회색 작은 점 */
+.step-dot {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid #d1d5db;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 안쪽 동그라미 */
+.step-dot::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+/* 활성 단계: 파란 동그라미 */
+.step.active .step-dot {
+  border-color: #2563eb;
+}
+
+.step.active .step-dot::after {
+  background: #2563eb;
+}
+
+/* 활성 단계: 점 밑으로 내려오는 파란 막대 */
+.step.active::after {
+  content: "";
+  position: absolute;
+  left: 22px;          /* 세로줄 위치랑 맞추기 */
+  top: 22px;           /* 점 바로 아래부터 시작 */
+  width: 4px;
+  height: 32px;        /* 막대 길이 (조절 가능) */
+  border-radius: 999px;
+  background: #2563eb;
+}
+
+/* 라벨 텍스트 */
+.step-label {
+  margin-left: 10px;
+  font-size: 13px;
+  color: #9ca3af;
+  white-space: nowrap;
+  opacity: 1;
+  transition: color 0.15s ease, opacity 0.2s ease;
+}
+
+/* 활성 라벨은 파란색 + 볼드 */
+.step.active .step-label {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.sidebar.collapsed .step-label {
+  opacity: 0;
+}
+
+/* 사이드바 접기 버튼 */
+.sidebar-toggle {
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  font-size: 14px;
+}
+
+.sidebar.collapsed .sidebar-toggle {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* 다음 단계 버튼 */
+.next-btn {
+  margin-top: 32px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sidebar.collapsed .next-btn span {
+  display: none;
+}
+
+.sidebar.collapsed .next-btn::after {
+  content: "▶";
+}
+
 
     /* ========== MAIN CONTENT ========== */
 
