@@ -335,6 +335,21 @@
     position: relative;
     overflow: hidden;
   }
+    .note {
+  position: absolute;
+  min-width: 160px;
+  max-width: 220px;
+  min-height: 90px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #eef3ff;
+  border: 1px solid #d1ddff;
+  font-size: 13px;
+  color: #111827;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  line-height: 1.4;
+  cursor: default;
+}
 
 
     .chat-input-wrap {
@@ -583,6 +598,58 @@
       remaining = timerDuration;
       updateDisplay();
     });
+    // ==== BRAINSTORMING NOTES ====
+    const board = document.querySelector(".board");
+    const messageInput = document.getElementById("messageInput");
+    const sendMessageBtn = document.getElementById("sendMessageBtn");
+    function createNote(text) {
+  // 포스트잇 DOM 만들기
+  const note = document.createElement("div");
+  note.className = "note";
+  note.textContent = text;
+
+  // 우선 보드에 붙이고 나서 크기 측정
+  board.appendChild(note);
+
+  const boardRect = board.getBoundingClientRect();
+  const noteRect = note.getBoundingClientRect();
+
+  // 보드 안 랜덤 위치 계산 (가장자리 살짝 여유)
+  const margin = 40;
+  const maxX = boardRect.width - noteRect.width - margin;
+  const maxY = boardRect.height - noteRect.height - margin;
+
+  const x = margin + Math.max(0, Math.random() * maxX);
+  const y = margin + Math.max(0, Math.random() * maxY);
+
+  note.style.left = `${x}px`;
+  note.style.top = `${y}px`;
+}
+  function handleSendMessage() {
+  const text = messageInput.value.trim();
+  if (!text) return;
+
+  // 타이머가 켜져 있을 때만 허용
+  if (!running) {
+    alert("브레인스토밍 타이머가 켜져 있을 때만 아이디어 포스트잇을 만들 수 있어요!");
+    return;
+  }
+
+  createNote(text);
+  messageInput.value = "";
+}
+
+// 버튼 클릭
+sendMessageBtn.addEventListener("click", handleSendMessage);
+
+// 엔터키로도 보내기
+messageInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleSendMessage();
+  }
+});
+
 
     // 바깥 클릭 시 드롭다운 닫기
     document.addEventListener("click", () => {
