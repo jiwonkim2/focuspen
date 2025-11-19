@@ -4,6 +4,27 @@
   <meta charset="UTF-8" />
   <title>Focuspen - 브레인스토밍</title>
   <style>
+    .step-item.active .step-dot {
+  border-color: #2563eb;
+  background: #2563eb;
+}
+
+.step-item.active span {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+    .step-connector {
+  position: absolute;
+  left: 8px;
+  top: 20px;
+  width: 4px;
+  height: calc(100% - 40px);
+  background: #e5e7eb;
+  border-radius: 4px;
+  z-index: -1;
+}
+
     * {
       box-sizing: border-box;
       margin: 0;
