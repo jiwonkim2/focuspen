@@ -320,73 +320,69 @@
       font-size: 10px;
       color: #9ca3af;
     }
+
+    /* ==== CHAT PANEL ==== */
     .chat-panel {
-  max-height: 260px;
-  margin-top: 16px;
-  margin-bottom: 8px;
-  padding-right: 8px;
-  overflow-y: auto;
-}
+      max-height: 260px;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      padding-right: 8px;
+      overflow-y: auto;
+    }
 
-/* 공통 말풍선 */
-.chat-msg {
-  max-width: 70%;
-  padding: 10px 14px;
-  border-radius: 18px;
-  font-size: 13px;
-  line-height: 1.5;
-  margin-bottom: 8px;
-  white-space: pre-line;
-}
+    .chat-msg {
+      max-width: 70%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      white-space: pre-line;
+    }
 
-/* 사용자 말풍선 (오른쪽) */
-.chat-msg.user {
-  margin-left: auto;
-  background: #111827;
-  color: #f9fafb;
-  border-bottom-right-radius: 4px;
-}
+    .chat-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 4px;
+    }
 
-/* 봇 말풍선 (왼쪽) */
-.chat-msg.bot {
-  margin-right: auto;
-  background: #f9fafb;
-  color: #111827;
-  border: 1px solid #e5e7eb;
-  border-bottom-left-radius: 4px;
-}
-
+    .chat-msg.bot {
+      margin-right: auto;
+      background: #f9fafb;
+      color: #111827;
+      border: 1px solid #e5e7eb;
+      border-bottom-left-radius: 4px;
+    }
 
     .board {
-    flex: 1;
-    margin-top: 12px;
-    border-radius: 16px;
-    background-image: radial-gradient(circle, #e5e7eb 1px, transparent 0);
-    background-size: 16px 16px;
-    background-position: -4px -4px;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
+      flex: 1;
+      margin-top: 12px;
+      border-radius: 16px;
+      background-image: radial-gradient(circle, #e5e7eb 1px, transparent 0);
+      background-size: 16px 16px;
+      background-position: -4px -4px;
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      position: relative;
+      overflow: hidden;
+    }
 
-    /* 새로 추가 */
-    position: relative;
-    overflow: hidden;
-  }
     .note {
-  position: absolute;
-  min-width: 160px;
-  max-width: 220px;
-  min-height: 90px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #eef3ff;
-  border: 1px solid #d1ddff;
-  font-size: 13px;
-  color: #111827;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
-  line-height: 1.4;
-  cursor: default;
-}
-
+      position: absolute;
+      min-width: 160px;
+      max-width: 220px;
+      min-height: 90px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #eef3ff;
+      border: 1px solid #d1ddff;
+      font-size: 13px;
+      color: #111827;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+      line-height: 1.4;
+      cursor: default;
+    }
 
     .chat-input-wrap {
       margin-top: 12px;
@@ -521,24 +517,25 @@
             <span class="select-arrow">▼</span>
           </div>
         </div>
-        <div class="chat-panel" id="chatPanel">
-  <!-- 여기로 대화 말풍선이 쌓임 -->
-</div>
 
+        <!-- 챗봇 대화 영역 -->
+        <div class="chat-panel" id="chatPanel"></div>
+
+        <!-- 포스트잇 보드 -->
         <div class="board"></div>
 
+        <!-- 입력창 -->
         <div class="chat-input-wrap">
-      <div class="chat-input">
-      <input
-      id="messageInput"
-      type="text"
-      placeholder="포커스 AI에게 궁금한 걸 물어보세요."
-      />
-      <button class="icon-btn" id="addOptionBtn">＋</button>
-      <button class="icon-btn" id="sendMessageBtn">➤</button>
-      </div>
-      </div>
-
+          <div class="chat-input">
+            <input
+              id="messageInput"
+              type="text"
+              placeholder="포커스 AI에게 궁금한 걸 물어보세요."
+            />
+            <button class="icon-btn" id="addOptionBtn">＋</button>
+            <button class="icon-btn" id="sendMessageBtn">➤</button>
+          </div>
+        </div>
       </main>
     </div>
   </div>
@@ -637,56 +634,57 @@
       remaining = timerDuration;
       updateDisplay();
     });
-    // ==== BRAINSTORMING NOTES ====
+
+    // ==== CHAT & NOTES LOGIC ====
     const board = document.querySelector(".board");
     const messageInput = document.getElementById("messageInput");
     const sendMessageBtn = document.getElementById("sendMessageBtn");
+    const chatPanel = document.getElementById("chatPanel");
+
     function createNote(text) {
-  // 포스트잇 DOM 만들기
-  const note = document.createElement("div");
-  note.className = "note";
-  note.textContent = text;
+      const note = document.createElement("div");
+      note.className = "note";
+      note.textContent = text;
 
-  // 우선 보드에 붙이고 나서 크기 측정
-  board.appendChild(note);
+      board.appendChild(note);
 
-  const boardRect = board.getBoundingClientRect();
-  const noteRect = note.getBoundingClientRect();
+      const boardRect = board.getBoundingClientRect();
+      const noteRect = note.getBoundingClientRect();
 
-  // 보드 안 랜덤 위치 계산 (가장자리 살짝 여유)
-  const margin = 40;
-  const maxX = boardRect.width - noteRect.width - margin;
-  const maxY = boardRect.height - noteRect.height - margin;
+      const margin = 40;
+      const maxX = boardRect.width - noteRect.width - margin;
+      const maxY = boardRect.height - noteRect.height - margin;
 
-  const x = margin + Math.max(0, Math.random() * maxX);
-  const y = margin + Math.max(0, Math.random() * maxY);
+      const x = margin + Math.max(0, Math.random() * maxX);
+      const y = margin + Math.max(0, Math.random() * maxY);
 
-  note.style.left = `${x}px`;
-  note.style.top = `${y}px`;
-}
-  function handleSendMessage() {
-  const text = messageInput.value.trim();
-  if (!text) return;
-  // ==== CHAT PANEL ====
-const chatPanel = document.getElementById("chatPanel");
+      note.style.left = `${x}px`;
+      note.style.top = `${y}px`;
+    }
 
-function addChatMessage(sender, text) {
-  if (!chatPanel) return;
-  const msg = document.createElement("div");
-  msg.className = `chat-msg ${sender}`;
-  msg.textContent = text;
-  chatPanel.appendChild(msg);
-  chatPanel.scrollTop = chatPanel.scrollHeight;
-}
-function getBotReply(userText) {
-  const t = userText.toLowerCase();
+    function addChatMessage(sender, text) {
+      if (!chatPanel) return;
+      const msg = document.createElement("div");
+      msg.className = `chat-msg ${sender}`;
+      msg.textContent = text;
+      chatPanel.appendChild(msg);
+      chatPanel.scrollTop = chatPanel.scrollHeight;
+    }
 
-  // 집 가고 싶다 / 귀찮다 / 하기 싫다 → 정신차려 멘트
-  if (t.includes("집") || t.includes("가기 싫") || t.includes("집가고") ||
-      t.includes("귀찮") || t.includes("하기 싫")) {
-    return `**정신 차리세요!** 😠
+    function getBotReply(userText) {
+      const t = userText.toLowerCase();
 
-방금 우리 브레인스토밍 아이디어들 진짜 잘 나오고 있었잖아요!
+      if (
+        t.includes("집") ||
+        t.includes("집가고") ||
+        t.includes("집 가고") ||
+        t.includes("가기 싫") ||
+        t.includes("귀찮") ||
+        t.includes("하기 싫")
+      ) {
+        return `정신 차리세요! 😠
+
+방금 우리 브레인스토밍 아이디어들 진짜 잘 나오고 있었잖아요.
 지금은 글쓰기에 집중하는 시간이에요.
 
 집에 가고 싶은 마음은 너무 공감하지만,
@@ -694,34 +692,41 @@ function getBotReply(userText) {
 지금 이야기하던 아이디어 중에서
 제일 마음에 드는 방향을 하나 골라서
 조금만 더 이어가 보면 어때요?`;
-  }
+      }
 
-  // 기본 답변
-  return "좋아요! 이 아이디어를 나중에 정리할 수 있도록 포스트잇으로 남겨둘게요. 비슷한 생각이 더 있으면 계속 말해줘!";
-}
+      return "좋아요! 이 아이디어를 나중에 정리할 수 있도록 포스트잇으로도 남겨둘게요. 비슷한 생각이 더 있으면 계속 말해줘!";
+    }
 
+    function handleSendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return;
 
-  // 타이머가 켜져 있을 때만 허용
-  if (!running) {
-    alert("브레인스토밍 타이머가 켜져 있을 때만 아이디어 포스트잇을 만들 수 있어요!");
-    return;
-  }
+      // 1) 사용자 말풍선
+      addChatMessage("user", text);
 
-  createNote(text);
-  messageInput.value = "";
-}
+      // 2) 타이머가 켜져 있을 때만 포스트잇 생성
+      if (running) {
+        createNote(text);
+      }
 
-// 버튼 클릭
-sendMessageBtn.addEventListener("click", handleSendMessage);
+      // 3) 봇 답변
+      const botText = getBotReply(text);
+      addChatMessage("bot", botText);
 
-// 엔터키로도 보내기
-messageInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    handleSendMessage();
-  }
-});
+      // 4) 인풋 비우기
+      messageInput.value = "";
+    }
 
+    // 버튼 클릭
+    sendMessageBtn.addEventListener("click", handleSendMessage);
+
+    // 엔터키로도 보내기
+    messageInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSendMessage();
+      }
+    });
 
     // 바깥 클릭 시 드롭다운 닫기
     document.addEventListener("click", () => {
@@ -734,4 +739,3 @@ messageInput.addEventListener("keydown", (e) => {
   </script>
 </body>
 </html>
-
