@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Focuspen Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f5f8;
+      color: #111827;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 24px 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 헤더 */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: #2563eb;
+    }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #a5b4fc, #4f46e5);
+    }
+
+    .user-name {
+      font-size: 14px;
+      color: #374151;
+    }
+
+    /* 상단 영역 */
+    .top-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      gap: 32px;
+    }
+
+    .greeting-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .greeting-sub {
+      font-size: 15px;
+      color: #6b7280;
+    }
+
+    .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 280px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 34px 10px 16px;
+      border-radius: 9999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      font-size: 14px;
+    }
+
+    .search-input::placeholder {
+      color: #9ca3af;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    .primary-btn {
+      border: none;
+      border-radius: 9999px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      background: #2563eb;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);
+      transition: background 0.15s ease, transform 0.1s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .primary-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    /* 탭 */
+    .tabs {
+    display: inline-flex;
+    gap: 12px;        /* 버튼 사이 약간 여유 */
+    padding: 0;       /* 패딩 제거 */
+    background: none; /* 🔥 이거! 회색 바 삭제 */
+    border-radius: 0; /* 둥근 바 효과 제거 */
+    margin-bottom: 20px;
+    }
+
+
+    .tab-button {
+    border-radius: 14px;
+    border: none;
+    background: #f3f4f6;  /* 연회색 배경 */
+    padding: 10px 22px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #4b5563;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    }
+
+    .tab-button.active {
+    background: #4b5563; /* 진회색 */
+    color: white;
+    }
+
+    /* 카드 그리드 */
+    .card-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px 18px 14px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 150px;
+      transition: background 0.2s ease, box-shadow 0.2s ease,
+        transform 0.1s ease;
+    }
+
+    .card:hover {
+      background: #f3f4f6;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .card-meta {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .card-meta strong {
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    .card-status {
+      font-size: 12px;
+      color: #2563eb;
+      margin-bottom: 10px;
+      margin-top: 2px;
+    }
+
+    /* ---- 여기부터: 네가 원하는 디테일 막대기 ---- */
+
+  /* ---- 진행 막대 / 점 스타일 여기부터 ---- */
+
+.step-bar {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #eceff3;   /* 기본 회색 트랙 */
+  border: none;
+  box-shadow: none;
+}
+
+.step-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 8px;
+  border-radius: 999px;
+  background: #5b8dff;   /* 파란 진행 바 */
+  border: none;
+  box-shadow: none;
+  z-index: 1;
+}
+
+.step-dot {
+  position: absolute;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #ffffff;          /* 안쪽은 흰색 */
+  border: 3px solid #5b8dff;    /* 파란 링 */
+  box-shadow: none;             /* 테두리 안 생기게 */
+  z-index: 2;
+}
+
+.step-dot:not(.done) {
+  border-color: #dfe2e7;        /* 아직 안 한 단계는 회색 링 */
+}
+
+/* 카드 hover 시 : 트랙만 살짝 진해지고, dot만 살짝 색 변화 */
+.card:hover .step-bar {
+  background: #dde1eb;          /* 회색 트랙만 진해짐 */
+}
+
+.card:hover .step-dot:not(.done) {
+  background: #dde1eb;          /* 안쪽만 살짝 회색 느낌 */
+}
+
+.card:hover .step-dot.done {
+  background: #ffffff;          /* 완료된 점은 흰색 안 유지 */
+}
+
+/* ---- 진행 막대 / 점 스타일 여기까지 ---- */
+
+
+
+
+    /* 빈 상태 텍스트 */
+    .empty-text {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-top: 40px;
+    }
+
+    /* 페이지네이션 */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .page-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 9999px;
+      border: none;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      font-size: 15px;
+      color: #9ca3af;
+    }
+
+    .page-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    @media (max-width: 1100px) {
+      .top-area {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .actions-right {
+        align-self: stretch;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        padding: 16px;
+      }
+    }
+    /* 모달 오버레이 (배경 반투명) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(2px);
+  z-index: 20;
+}
+
+/* 모달 박스 */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  background: white;
+  padding: 26px 32px;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.modal-icon {
+  font-size: 18px;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.modal-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-check {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  gap: 4px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.modal-btn.cancel {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.modal-btn.primary {
+  background: #2563eb;
+  color: white;
+}
+
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="logo">Focuspen</div>
+    <div class="user-chip">
+      <div class="user-avatar"></div>
+      <div class="user-name">김민주님</div>
+    </div>
+  </header>
+
+  <!-- 상단 영역 -->
+  <section class="top-area">
+    <div>
+      <h1 class="greeting-title">민주님,<br />오늘도 멋진 글 한 편 써보는 건 어때요?</h1>
+      <p class="greeting-sub">작성 중인 글을 이어 쓰거나, 새 글을 시작해볼 수 있어요.</p>
+    </div>
+
+    <div class="actions-right">
+      <div class="search-wrapper">
+        <input
+          id="searchInput"
+          class="search-input"
+          placeholder="내가 쓴 글을 찾아보세요."
+        />
+        <span class="search-icon">🔍</span>
+      </div>
+      <button class="primary-btn">
+        <span>＋</span>
+        <span>새 글 작성하기</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 탭 -->
+  <div class="tabs">
+    <button class="tab-button active" data-filter="all">전체</button>
+    <button class="tab-button" data-filter="in-progress">작성중</button>
+    <button class="tab-button" data-filter="done">작성완료</button>
+  </div>
+
+  <!-- 카드들 -->
+  <main id="cardContainer" class="card-grid"></main>
+
+  <!-- 페이지네이션 (지금은 고정 1페이지)-->
+  <div class="pagination">
+    <button class="page-btn">‹</button>
+    <div class="page-number">1</div>
+    <button class="page-btn">›</button>
+  </div>
+</div>
+<!-- 새 글 작성 모달 -->
+<div id="modalOverlay" class="modal-overlay hidden"></div>
+
+<div id="newPostModal" class="modal hidden">
+  <div class="modal-header">
+    <span class="modal-icon">🖋</span>
+    <h2>작성할 글의 정보를 알려주세요</h2>
+  </div>
+
+  <div class="modal-body">
+
+    <label class="modal-label">글 제목</label>
+    <input type="text" class="modal-input" placeholder="제목을 입력해주세요." />
+
+    <label class="modal-label">작성 기간</label>
+    <div class="modal-row">
+      <input type="date" class="modal-input" />
+      <label class="modal-check">
+        <input type="checkbox" /> 기한 없음
+      </label>
+    </div>
+
+    <label class="modal-label">분량</label>
+    <select class="modal-input">
+      <option>분량을 선택해주세요.</option>
+      <option>A4용지 1장 이내</option>
+      <option>A4용지 3장 이내</option>
+      <option>A4용지 5장 이내</option>
+      <option>A4용지 10장 이내</option>
+      <option>기타</option>
+    </select>
+
+    <div class="modal-footer">
+      <button id="cancelModal" class="modal-btn cancel">취소하기</button>
+      <button id="startWritingBtn" class="modal-btn primary">작성 시작하기 →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // 샘플 데이터: step은 1~4 (단계 개수)
+  const writings = [
+    {
+      id: 1,
+      title: "글제목입니다. 글제목입니다.",
+      period: "2025. 11. 14 ~ 2025. 11. 25",
+      pages: "A4 2장 이내",
+      statusLabel: "브레인스토밍 중..",
+      stage: "in-progress",
+      step: 1,
+      progress: 0.2 // 요게 찔끔 정도( 0.2 =20%)
+    },
+    {
+      id: 2,
+      title: "글제목입니다. 글제목입니다. 글제목입...",
+      period: "2025. 11. 14 ~ 2025. 11. 25",
+      pages: "A4 2장 이내",
+      statusLabel: "브레인스토밍 중..",
+      stage: "in-progress",
+      step: 1,
+      progress: 0.2
+    },
+    {
+      id: 3,
+      title: "글제목입니다. 글제목입니다.",
+      period: "2025. 11. 14 ~ 2025. 11. 25",
+      pages: "A4 2장 이내",
+      statusLabel: "작성 완료",
+      stage: "done",
+      step: 4
+    },
+    {
+      id: 4,
+      title: "글제목입니다. 글제목입니다.",
+      period: "2025. 11. 14 ~ 2025. 11. 25",
+      pages: "A4 2장 이내",
+      statusLabel: "작성 완료",
+      stage: "done",
+      step: 4
+    },
+    {
+      id: 5,
+      title: "글제목입니다. 글제목입니다. 글제목입...",
+      period: "2025. 11. 14 ~ 2025. 11. 25",
+      pages: "A4 2장 이내",
+      statusLabel: "교정 중..",
+      stage: "in-progress",
+      step: 3,
+      progress: 0.2
+    }
+  ];
+
+  let currentFilter = "all";
+  const cardContainer = document.getElementById("cardContainer");
+  const searchInput = document.getElementById("searchInput");
+
+  // 막대기(4단계) HTML 만들어주는 함수
+  // step: 현재 단계(1~4), progress: 그 단계 안에서 0~1만큼 찔끔
+function renderStepBar(step, progress) {
+  const total = 4;
+
+  // progress 안 넣은 카드들은 기본값 1(그 단계까지 꽉 찬 상태)
+  const innerProgress = progress == null ? 1 : progress;
+  const p = Math.max(0, Math.min(1, innerProgress)); // 0~1로 클램프
+
+  // 전체 막대에서 차지하는 비율: (이전 단계 개수 + 현재 단계 진행) / (총 구간 수)
+  const pos = (step - 1 + p) / (total - 1);
+  const fillPercent = Math.max(0, Math.min(1, pos)) * 100;
+
+  let dotsHtml = "";
+  for (let i = 1; i <= total; i++) {
+    const leftPercent = ((i - 1) / (total - 1)) * 100;
+    const isDone = i <= step;  // 점 색은 여전히 step으로만 결정
+    dotsHtml += `
+      <div class="step-dot ${isDone ? "done" : ""}"
+           style="left: ${leftPercent}%"></div>
+    `;
+  }
+
+  return `
+    <div class="step-bar">
+      <div class="step-bar-fill" style="width: ${fillPercent}%;"></div>
+      ${dotsHtml}
+    </div>
+  `;
+}
+
+  function renderCards() {
+    const keyword = searchInput.value.trim().toLowerCase();
+
+    const filtered = writings.filter((w) => {
+      const byStage = currentFilter === "all" || w.stage === currentFilter;
+      const bySearch =
+        !keyword || w.title.toLowerCase().includes(keyword);
+      return byStage && bySearch;
+    });
+
+    if (filtered.length === 0) {
+      cardContainer.innerHTML =
+        '<p class="empty-text">조건에 맞는 글이 없어요.</p>';
+      return;
+    }
+
+    cardContainer.innerHTML = filtered
+      .map(
+        (w) => `
+      <article class="card">
+        <div>
+          <h2 class="card-title">${w.title}</h2>
+          <p class="card-meta"><strong>${w.period}</strong></p>
+          <p class="card-meta">${w.pages}</p>
+        </div>
+        <div>
+          <p class="card-status">${w.statusLabel}</p>
+          ${renderStepBar(w.step, w.progress)}
+        </div>
+      </article>
+    `
+      )
+      .join("");
+  }
+
+  // 탭 클릭 이벤트
+  document.querySelectorAll(".tab-button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".tab-button")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderCards();
+    });
+  });
+
+  // 검색 이벤트
+  searchInput.addEventListener("input", () => {
+    renderCards();
+  });
+
+  // 초기 렌더
+  renderCards();
+
+   const modal = document.getElementById("newPostModal");
+    const overlay = document.getElementById("modalOverlay");
+    const newPostBtn = document.querySelector(".primary-btn");
+    const cancelModalBtn = document.getElementById("cancelModal");
+
+    newPostBtn.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      overlay.classList.remove("hidden");
+    });
+
+    cancelModalBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", closeModal);
+
+    function closeModal() {
+      modal.classList.add("hidden");
+      overlay.classList.add("hidden");
+    }
+    const startWritingBtn = document.querySelector(".modal-btn.primary");
+    console.log("startWritingBtn =", startWritingBtn);
+
+
+startWritingBtn.addEventListener("click", (e) => {
+  e.preventDefault();          // 🔹 기본 동작 막기
+  closeModal();
+  console.log("go brainstorm!");
+  window.location.href = "./brainstorm.html";
+});
+
+  
+</script>
+</body>
+</html>
