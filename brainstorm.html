@@ -200,6 +200,86 @@
       border-radius: 999px;
       background: linear-gradient(135deg, #4f46e5, #60a5fa);
     }
+    /* 채팅카드 + 보드 나란히 배치 */
+.content-row {
+  margin-top: 16px;
+  flex: 1;
+  display: flex;
+  gap: 24px;
+}
+
+/* 왼쪽 작은 채팅 카드 */
+.chat-card {
+  width: 420px;               /* 카드 너비 */
+  max-height: 540px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 카드 헤더 (포커스펜 AI와 대화 하기) */
+.chat-card-header {
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.chat-card-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.chat-card-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4f46e5, #60a5fa);
+}
+
+.chat-card-chevron {
+  margin-left: auto;
+  font-size: 12px;
+  color: #9ca3af;
+  transition: transform 0.2s ease;
+}
+
+/* 카드 안 내용 영역 (스크롤) */
+.chat-card-body {
+  padding: 12px 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* 접힌 상태 */
+.chat-card.collapsed .chat-card-body {
+  display: none;
+}
+
+.chat-card.collapsed .chat-card-chevron {
+  transform: rotate(180deg);
+}
+
+/* chat-panel은 카드 안에 들어가니까 높이 제한 해제 */
+.chat-panel {
+  max-height: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-right: 0;
+}
+
+/* 보드는 오른쪽 넓게 */
+.board {
+  flex: 1;
+}
+
 
     /* ========== TIMER ========== */
 
@@ -510,33 +590,45 @@
       </header>
 
       <main class="canvas">
-        <div class="stage-bar">
-          <div class="stage-chip">
-            <div class="stage-dot"></div>
-            <span>포커스펜 AI와 대화 하기</span>
-            <span class="select-arrow">▼</span>
-          </div>
-        </div>
+  <div class="stage-bar">
+    <!-- 위쪽에는 그냥 단계 표시만 (원하면 지워도 됨) -->
+    <div class="stage-chip">
+      <div class="stage-dot"></div>
+      <span>브레인 스토밍</span>
+    </div>
+  </div>
 
-        <!-- 챗봇 대화 영역 -->
+  <div class="content-row">
+    <!-- 왼쪽: 채팅 카드 -->
+    <div class="chat-card" id="chatCard">
+      <div class="chat-card-header" id="chatCardHeader">
+        <div class="chat-card-dot"></div>
+        <div class="chat-card-title">포커스펜 AI와 대화 하기</div>
+        <span class="chat-card-chevron" id="chatCardChevron">⌃</span>
+      </div>
+      <div class="chat-card-body" id="chatCardBody">
         <div class="chat-panel" id="chatPanel"></div>
+      </div>
+    </div>
 
-        <!-- 포스트잇 보드 -->
-        <div class="board"></div>
+    <!-- 오른쪽: 포스트잇 보드 -->
+    <div class="board"></div>
+  </div>
 
-        <!-- 입력창 -->
-        <div class="chat-input-wrap">
-          <div class="chat-input">
-            <input
-              id="messageInput"
-              type="text"
-              placeholder="포커스 AI에게 궁금한 걸 물어보세요."
-            />
-            <button class="icon-btn" id="addOptionBtn">＋</button>
-            <button class="icon-btn" id="sendMessageBtn">➤</button>
-          </div>
-        </div>
-      </main>
+  <!-- 아래 입력창은 그대로 -->
+  <div class="chat-input-wrap">
+    <div class="chat-input">
+      <input
+        id="messageInput"
+        type="text"
+        placeholder="포커스 AI에게 궁금한 걸 물어보세요."
+      />
+      <button class="icon-btn" id="addOptionBtn">＋</button>
+      <button class="icon-btn" id="sendMessageBtn">➤</button>
+    </div>
+  </div>
+</main>
+
     </div>
   </div>
 
@@ -640,6 +732,15 @@
     const messageInput = document.getElementById("messageInput");
     const sendMessageBtn = document.getElementById("sendMessageBtn");
     const chatPanel = document.getElementById("chatPanel");
+    const chatCard = document.getElementById("chatCard");
+    const chatCardHeader = document.getElementById("chatCardHeader");
+
+    // 채팅 카드 헤더 클릭하면 접기/펼치기
+    chatCardHeader.addEventListener("click", () => {
+    chatCard.classList.toggle("collapsed");
+    });
+
+
 
     function createNote(text) {
       const note = document.createElement("div");
