@@ -22,136 +22,126 @@
       overflow: hidden;
     }
 
-    /* ========== SIDEBAR (FINAL CLEAN VERSION) ========== */
+    /* ========== SIDEBAR (세로 스텝바) ========== */
 
-/* 전체 stepper 세로선 */
-.stepper {
-  position: relative;
-  width: 220px;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  /* 위쪽을 더 띄우고 싶으면 숫자만 조절해도 돼 */
-  padding: 80px 24px 32px;   /* top 80px, left/right 24px, bottom 32px */
-  display: flex;
-  flex-direction: column;
-  transition: width 0.25s ease;;
-}
+    .stepper {
+      position: relative;
+      width: 220px;
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      padding: 80px 24px 32px;  /* 위 공간 80px */
+      display: flex;
+      flex-direction: column;
+      transition: width 0.25s ease;
+    }
 
-.stepper::before {
-  content: "";
-  position: absolute;
-  left: 48px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: #e5e7eb;   /* 연회색 라인 */
-  border-radius: 2px;
-}
+    .stepper::before {
+      content: "";
+      position: absolute;
+      left: 48px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #e5e7eb;   /* 연회색 라인 */
+      border-radius: 2px;
+    }
 
-/* 각 단계 */
-.vertical-step {
-  position: relative;
-  margin-bottom: 48px;
-}
+    .vertical-step {
+      position: relative;
+      margin-bottom: 48px;
+    }
 
-.vertical-step:last-child {
-  margin-bottom: 0;
-}
+    .vertical-step:last-child {
+      margin-bottom: 0;
+    }
 
-/* 원형 점 */
-.circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: white;
-  border: 4px solid #d1d5db; /* 기본 회색 */
-  position: absolute;
-  left: 38px;
-  top: 0;
-  z-index: 3;
-}
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      border: 4px solid #d1d5db; /* 기본 회색 */
+      position: absolute;
+      left: 38px;
+      top: 0;
+      z-index: 3;
+    }
 
-/* 파란 진행중 단계 */
-.vertical-step.active .circle {
-  border-color: #4e8cff;
-  background: white;
-}
+    .vertical-step.active .circle {
+      border-color: #4e8cff;
+      background: white;
+    }
 
-/* active 아래로 내려오는 파란 막대 */
-.vertical-step.active::after {
-  content: "";
-  position: absolute;
-  left: 48px;
-  top: 20px;
-  width: 4px;
-  height: 60px; /* 단계 사이 거리 */
-  background: #4e8cff;
-  border-radius: 2px;
-  z-index: 1;
-}
+    .vertical-step.active::after {
+      content: "";
+      position: absolute;
+      left: 48px;
+      top: 20px;
+      width: 4px;
+      height: 60px; /* 단계 사이 거리 */
+      background: #4e8cff;
+      border-radius: 2px;
+      z-index: 1;
+    }
 
-/* 라벨 텍스트 */
-.label {
-  font-size: 16px;
-  margin-left: 60px;
-  margin-top: -2px;
-  color: #bfc3c9;
-}
+    .label {
+      font-size: 16px;
+      margin-left: 60px;
+      margin-top: -2px;
+      color: #bfc3c9;
+    }
 
-.vertical-step.active .label {
-  font-weight: 600;
-  color: #4e8cff;
-}
+    .vertical-step.active .label {
+      font-weight: 600;
+      color: #4e8cff;
+    }
 
-/* 텍스트 */
-.step-label {
-  margin-left: 40px;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.20);
-  white-space: nowrap;
-}
+    /* 접었을 때 텍스트 숨기기 */
+    .stepper.collapsed {
+      width: 80px;
+    }
 
-.step.active .step-label {
-  color: #4E8CFF;
-  font-weight: 500;
-}
+    .stepper.collapsed .label {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-/* 토글 버튼 */
-.sidebar-toggle {
-  position: absolute;
-  right: -14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  font-size: 14px;
-}
+    /* 토글 버튼 */
+    .sidebar-toggle {
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      font-size: 14px;
+    }
 
-.sidebar.collapsed .sidebar-toggle {
-  transform: translateY(-50%) rotate(180deg);
-}
+    .stepper.collapsed .sidebar-toggle {
+      transform: translateY(-50%) rotate(180deg);
+    }
 
-/* 다음 단계 버튼 */
-.next-btn {
-  margin-top: 32px;
-  width: 100%;
-  padding: 12px 16px;
-  border-radius: 999px;
-  border: none;
-  background: #4E8CFF;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
+    /* 다음 단계 버튼 */
+    .next-btn {
+      margin-top: 32px;
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: none;
+      background: #4E8CFF;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
 
     /* ========== MAIN CONTENT ========== */
 
@@ -192,166 +182,69 @@
       border-radius: 999px;
       background: linear-gradient(135deg, #4f46e5, #60a5fa);
     }
+
     /* 채팅카드 + 보드 나란히 배치 */
-.content-row {
-  margin-top: 16px;
-  flex: 1;
-  display: flex;
-  gap: 24px;
-}
-
-/* 왼쪽 작은 채팅 카드 */
-.chat-card {
-  width: 420px;               /* 카드 너비 */
-  max-height: 540px;
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* 카드 헤더 (포커스펜 AI와 대화 하기) */
-.chat-card-header {
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid #e5e7eb;
-  cursor: pointer;
-}
-
-.chat-card-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: #111827;
-}
-
-.chat-card-dot {
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #4f46e5, #60a5fa);
-}
-
-.chat-card-chevron {
-  margin-left: auto;
-  font-size: 12px;
-  color: #9ca3af;
-  transition: transform 0.2s ease;
-}
-
-/* 카드 안 내용 영역 (스크롤) */
-.chat-card-body {
-  padding: 12px 16px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-/* 접힌 상태 */
-.chat-card.collapsed .chat-card-body {
-  display: none;
-}
-
-.chat-card.collapsed .chat-card-chevron {
-  transform: rotate(180deg);
-}
-
-/* chat-panel은 카드 안에 들어가니까 높이 제한 해제 */
-.chat-panel {
-  max-height: none;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-right: 0;
-}
-
-/* 보드는 오른쪽 넓게 */
-.board {
-  flex: 1;
-}
-
-
-    /* ========== TIMER ========== */
-
-    .timer-wrapper {
+    .content-row {
+      margin-top: 16px;
+      flex: 1;
       display: flex;
-      align-items: center;
-      gap: 12px;
+      gap: 24px;
     }
 
-    .timer-pill {
-      position: relative;
-      min-width: 96px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #f9fafb;
+    .chat-card {
+      width: 420px;
+      max-height: 540px;
+      background: #ffffff;
+      border-radius: 16px;
       border: 1px solid #e5e7eb;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-card-header {
+      padding: 12px 18px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
+      gap: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      cursor: pointer;
+    }
+
+    .chat-card-title {
+      font-size: 14px;
+      font-weight: 500;
       color: #111827;
-      cursor: pointer;
     }
 
-    .timer-pill span.chevron {
-      font-size: 10px;
-      color: #9ca3af;
-      margin-left: 4px;
-    }
-
-    .timer-dropdown {
-      position: absolute;
-      right: 0;
-      top: 110%;
-      width: 120px;
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.12);
-      padding: 6px 0;
-      display: none;
-      z-index: 20;
-    }
-
-    .timer-dropdown.open {
-      display: block;
-    }
-
-    .timer-option {
-      width: 100%;
-      padding: 6px 12px;
-      font-size: 13px;
-      text-align: left;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #4b5563;
-    }
-
-    .timer-option:hover {
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
-
-    .timer-controls {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-    }
-
-    .timer-btn {
-      padding: 4px 8px;
+    .chat-card-dot {
+      width: 26px;
+      height: 26px;
       border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
-      cursor: pointer;
+      background: linear-gradient(135deg, #4f46e5, #60a5fa);
     }
 
-    /* ========== CONTENT AREA ========== */
+    .chat-card-chevron {
+      margin-left: auto;
+      font-size: 12px;
+      color: #9ca3af;
+      transition: transform 0.2s ease;
+    }
+
+    .chat-card-body {
+      padding: 12px 16px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .chat-card.collapsed .chat-card-body {
+      display: none;
+    }
+
+    .chat-card.collapsed .chat-card-chevron {
+      transform: rotate(180deg);
+    }
 
     .canvas {
       flex: 1;
@@ -394,11 +287,12 @@
     }
 
     /* ==== CHAT PANEL ==== */
+
     .chat-panel {
-      max-height: 260px;
-      margin-top: 16px;
-      margin-bottom: 8px;
-      padding-right: 8px;
+      max-height: none;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-right: 0;
       overflow-y: auto;
     }
 
@@ -492,70 +386,66 @@
     }
 
     @media (max-width: 960px) {
-      .sidebar {
+      .stepper {
         display: none;
       }
     }
   </style>
 </head>
 <body>
-  <div class="stepper">
-  
-  <div class="step vertical-step active">
-    <div class="circle"></div>
-    <div class="label">브레인 스토밍</div>
-  </div>
+  <div class="app">
+    <!-- ⭐ 세로 스텝바 -->
+    <aside class="stepper" id="sidebar">
+      <div class="vertical-step active">
+        <div class="circle"></div>
+        <div class="label">브레인 스토밍</div>
+      </div>
 
-  <div class="step vertical-step">
-    <div class="circle"></div>
-    <div class="label">계획</div>
-  </div>
+      <div class="vertical-step">
+        <div class="circle"></div>
+        <div class="label">계획</div>
+      </div>
 
-  <div class="step vertical-step">
-    <div class="circle"></div>
-    <div class="label">초안 작성 및 수정</div>
-  </div>
+      <div class="vertical-step">
+        <div class="circle"></div>
+        <div class="label">초안 작성 및 수정</div>
+      </div>
 
-  <div class="step vertical-step">
-    <div class="circle"></div>
-    <div class="label">서론</div>
-  </div>
+      <div class="vertical-step">
+        <div class="circle"></div>
+        <div class="label">서론</div>
+      </div>
 
-  <div class="step vertical-step">
-    <div class="circle"></div>
-    <div class="label">본론</div>
-  </div>
+      <div class="vertical-step">
+        <div class="circle"></div>
+        <div class="label">본론</div>
+      </div>
 
-  <div class="step vertical-step">
-    <div class="circle"></div>
-    <div class="label">결론</div>
-  </div>
+      <div class="vertical-step">
+        <div class="circle"></div>
+        <div class="label">결론</div>
+      </div>
 
-  <div class="step vertical-step">
-    <div class="circle"></div>
-    <div class="label">교정</div>
-  </div>
+      <div class="vertical-step">
+        <div class="circle"></div>
+        <div class="label">교정</div>
+      </div>
 
-  <div class="step vertical-step">
-    <div class="circle"></div>
-    <div class="label">작성 완료</div>
-  </div>
-
-</div>
-
+      <div class="vertical-step">
+        <div class="circle"></div>
+        <div class="label">작성 완료</div>
+      </div>
 
       <button class="sidebar-toggle" id="sidebarToggle">❯</button>
-
       <button class="next-btn"><span>다음 단계</span></button>
     </aside>
 
-    <!-- MAIN -->
+    <!-- ⭐ 오른쪽 메인 -->
     <div class="main">
       <header class="topbar">
         <div class="logo">Focuspen</div>
 
         <div class="timer-wrapper">
-          <!-- Timer -->
           <div style="position: relative;">
             <div class="timer-pill" id="timerPill">
               <span id="timerDisplay">00:00</span>
@@ -585,45 +475,43 @@
       </header>
 
       <main class="canvas">
-  <div class="stage-bar">
-    <!-- 위쪽에는 그냥 단계 표시만 (원하면 지워도 됨) -->
-    <div class="stage-chip">
-      <div class="stage-dot"></div>
-      <span>브레인 스토밍</span>
-    </div>
-  </div>
+        <div class="stage-bar">
+          <div class="stage-chip">
+            <div class="stage-dot"></div>
+            <span>브레인 스토밍</span>
+          </div>
+        </div>
 
-  <div class="content-row">
-    <!-- 왼쪽: 채팅 카드 -->
-    <div class="chat-card" id="chatCard">
-      <div class="chat-card-header" id="chatCardHeader">
-        <div class="chat-card-dot"></div>
-        <div class="chat-card-title">포커스펜 AI와 대화 하기</div>
-        <span class="chat-card-chevron" id="chatCardChevron">⌃</span>
-      </div>
-      <div class="chat-card-body" id="chatCardBody">
-        <div class="chat-panel" id="chatPanel"></div>
-      </div>
-    </div>
+        <div class="content-row">
+          <!-- 왼쪽: 채팅 카드 -->
+          <div class="chat-card" id="chatCard">
+            <div class="chat-card-header" id="chatCardHeader">
+              <div class="chat-card-dot"></div>
+              <div class="chat-card-title">포커스펜 AI와 대화 하기</div>
+              <span class="chat-card-chevron" id="chatCardChevron">⌃</span>
+            </div>
+            <div class="chat-card-body" id="chatCardBody">
+              <div class="chat-panel" id="chatPanel"></div>
+            </div>
+          </div>
 
-    <!-- 오른쪽: 포스트잇 보드 -->
-    <div class="board"></div>
-  </div>
+          <!-- 오른쪽: 포스트잇 보드 -->
+          <div class="board"></div>
+        </div>
 
-  <!-- 아래 입력창은 그대로 -->
-  <div class="chat-input-wrap">
-    <div class="chat-input">
-      <input
-        id="messageInput"
-        type="text"
-        placeholder="포커스 AI에게 궁금한 걸 물어보세요."
-      />
-      <button class="icon-btn" id="addOptionBtn">＋</button>
-      <button class="icon-btn" id="sendMessageBtn">➤</button>
-    </div>
-  </div>
-</main>
-
+        <!-- 아래 입력창 -->
+        <div class="chat-input-wrap">
+          <div class="chat-input">
+            <input
+              id="messageInput"
+              type="text"
+              placeholder="포커스 AI에게 궁금한 걸 물어보세요."
+            />
+            <button class="icon-btn" id="addOptionBtn">＋</button>
+            <button class="icon-btn" id="sendMessageBtn">➤</button>
+          </div>
+        </div>
+      </main>
     </div>
   </div>
 
@@ -645,8 +533,8 @@
     const pauseBtn = document.getElementById("timerPause");
     const resetBtn = document.getElementById("timerReset");
 
-    let timerDuration = 0; // ms
-    let remaining = 0;     // ms
+    let timerDuration = 0;
+    let remaining = 0;
     let timerId = null;
     let running = false;
 
@@ -674,7 +562,6 @@
       timerDropdown.classList.toggle("open");
     });
 
-    // 타이머 값 선택
     timerOptions.forEach((btn) => {
       btn.addEventListener("click", () => {
         const min = Number(btn.dataset.min);
@@ -686,11 +573,10 @@
       });
     });
 
-    // 시작
     startBtn.addEventListener("click", () => {
       if (running) return;
       if (remaining <= 0) remaining = timerDuration;
-      if (remaining <= 0) return; // 0분 설정시 시작 안함
+      if (remaining <= 0) return;
 
       const start = Date.now();
       const end = start + remaining;
@@ -710,12 +596,10 @@
       }, 200);
     });
 
-    // 일시정지
     pauseBtn.addEventListener("click", () => {
       clearTimer();
     });
 
-    // 리셋
     resetBtn.addEventListener("click", () => {
       clearTimer();
       remaining = timerDuration;
@@ -730,12 +614,9 @@
     const chatCard = document.getElementById("chatCard");
     const chatCardHeader = document.getElementById("chatCardHeader");
 
-    // 채팅 카드 헤더 클릭하면 접기/펼치기
     chatCardHeader.addEventListener("click", () => {
-    chatCard.classList.toggle("collapsed");
+      chatCard.classList.toggle("collapsed");
     });
-
-
 
     function createNote(text) {
       const note = document.createElement("div");
@@ -797,26 +678,20 @@
       const text = messageInput.value.trim();
       if (!text) return;
 
-      // 1) 사용자 말풍선
       addChatMessage("user", text);
 
-      // 2) 타이머가 켜져 있을 때만 포스트잇 생성
       if (running) {
         createNote(text);
       }
 
-      // 3) 봇 답변
       const botText = getBotReply(text);
       addChatMessage("bot", botText);
 
-      // 4) 인풋 비우기
       messageInput.value = "";
     }
 
-    // 버튼 클릭
     sendMessageBtn.addEventListener("click", handleSendMessage);
 
-    // 엔터키로도 보내기
     messageInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
@@ -824,12 +699,10 @@
       }
     });
 
-    // 바깥 클릭 시 드롭다운 닫기
     document.addEventListener("click", () => {
       timerDropdown.classList.remove("open");
     });
 
-    // 초기 값
     remaining = timerDuration;
     updateDisplay();
   </script>
