@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>Focuspen - Left Page</title>
+  <title>Focuspen – 브레인스토밍</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,163 +13,38 @@
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Pretendard", sans-serif;
       background: #f3f3f5;
+      color: #111827;
     }
 
     .app {
       display: flex;
+      flex-direction: column;
       height: 100vh;
       width: 100vw;
       overflow: hidden;
     }
 
-    /* ========== SIDEBAR (세로 스텝바) ========== */
-
-    /* ========== SIDEBAR (세로 스텝바) ========== */
-
-.stepper {
-  position: relative;
-  width: 220px;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  padding: 80px 24px 32px;  /* 위 공간 80px */
-  display: flex;
-  flex-direction: column;
-  transition: width 0.25s ease;
-}
-
-/* 전체 연한 회색 라인 */
-.stepper::before {
-  content: "";
-  position: absolute;
-  left: 32px;        /* 동그라미 중심 위치랑 맞추기 */
-  top: 80px;         /* 첫 번째 스텝 시작 y 위치 */
-  bottom: 80px;      /* 마지막 스텝 아래 여백 */
-  width: 3px;
-  background: #e5e7eb;
-  border-radius: 999px;
-  z-index: 0;
-}
-
-/* 진행된 부분 파란 라인 (지금은 첫 번째 단계까지) */
-.stepper::after {
-  content: "";
-  position: absolute;
-  left: 32px;
-  top: 80px;
-  height: 72px;      /* 파란 라인 길이 – 필요하면 숫자 조절 */
-  width: 3px;
-  background: #2563eb;
-  border-radius: 999px;
-  z-index: 1;
-}
-
-/* 각 단계 */
-.vertical-step {
-  position: relative;
-  margin-bottom: 48px;
-}
-
-/* 동그라미 */
-.circle {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  border: 3px solid #d1d5db;  /* 기본 회색 */
-  position: absolute;
-  left: 23px;                  /* 중심이 x=32px에 오도록 */
-  top: 0;
-  background: #ffffff;
-  z-index: 2;
-}
-
-/* 활성 단계 동그라미 */
-.vertical-step.active .circle {
-  border-color: #2563eb;
-}
-
-/* 텍스트 */
-.label {
-  font-size: 14px;
-  margin-left: 60px;
-  margin-top: 0;
-  color: #bfc3c9;
-}
-
-.vertical-step.active .label {
-  font-weight: 600;
-  color: #2563eb;
-}
-
-    /* 접었을 때 텍스트 숨기기 */
-    .stepper.collapsed {
-      width: 80px;
-    }
-
-    .stepper.collapsed .label {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* 토글 버튼 */
-    .sidebar-toggle {
-      position: absolute;
-      right: -14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      font-size: 14px;
-    }
-
-    .stepper.collapsed .sidebar-toggle {
-      transform: translateY(-50%) rotate(180deg);
-    }
-
-    /* 다음 단계 버튼 */
-    .next-btn {
-      margin-top: 32px;
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: none;
-      background: #4E8CFF;
-      color: #ffffff;
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* ========== MAIN CONTENT ========== */
-
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: #f5f5f7;
-    }
-
+    /* ========== TOP BAR ========== */
     .topbar {
       height: 64px;
       background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
+      padding: 0 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 32px;
     }
 
     .logo {
       font-size: 20px;
       font-weight: 700;
       color: #2563eb;
+    }
+
+    .page-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #4b5563;
     }
 
     .user-badge {
@@ -187,21 +62,21 @@
       background: linear-gradient(135deg, #4f46e5, #60a5fa);
     }
 
-    /* 채팅카드 + 보드 나란히 배치 */
-    .content-row {
-      margin-top: 16px;
+    /* ========== MAIN ROW ========== */
+    .main {
       flex: 1;
       display: flex;
+      padding: 24px 32px 32px;
       gap: 24px;
     }
 
+    /* 왼쪽: 챗 패널 (심플 버전) */
     .chat-card {
       width: 420px;
-      max-height: 540px;
       background: #ffffff;
       border-radius: 16px;
       border: 1px solid #e5e7eb;
-      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -213,13 +88,6 @@
       align-items: center;
       gap: 10px;
       border-bottom: 1px solid #e5e7eb;
-      cursor: pointer;
-    }
-
-    .chat-card-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: #111827;
     }
 
     .chat-card-dot {
@@ -229,81 +97,22 @@
       background: linear-gradient(135deg, #4f46e5, #60a5fa);
     }
 
-    .chat-card-chevron {
-      margin-left: auto;
-      font-size: 12px;
-      color: #9ca3af;
-      transition: transform 0.2s ease;
+    .chat-card-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
     }
 
     .chat-card-body {
-      padding: 12px 16px;
+      padding: 12px 16px 16px;
       flex: 1;
-      overflow-y: auto;
-    }
-
-    .chat-card.collapsed .chat-card-body {
-      display: none;
-    }
-
-    .chat-card.collapsed .chat-card-chevron {
-      transform: rotate(180deg);
-    }
-
-    .canvas {
-      flex: 1;
-      padding: 24px 32px 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .stage-bar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .stage-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      font-size: 13px;
-      color: #111827;
-      min-width: 260px;
-    }
-
-    .stage-dot {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #4f46e5, #60a5fa);
-    }
-
-    .select-arrow {
-      margin-left: auto;
-      font-size: 10px;
-      color: #9ca3af;
-    }
-
-    /* ==== CHAT PANEL ==== */
-
-    .chat-panel {
-      max-height: none;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-right: 0;
       overflow-y: auto;
     }
 
     .chat-msg {
-      max-width: 70%;
-      padding: 10px 14px;
-      border-radius: 18px;
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 16px;
       font-size: 13px;
       line-height: 1.5;
       margin-bottom: 8px;
@@ -325,9 +134,67 @@
       border-bottom-left-radius: 4px;
     }
 
+    /* 오른쪽: 보드 + 상단 바 */
+    .right-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stage-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stage-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: #e3edff;
+      border: 1px solid #c4d7ff;
+      font-size: 13px;
+      color: #111827;
+      min-width: 220px;
+    }
+
+    .stage-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5, #60a5fa);
+    }
+
+    .group-btn {
+      margin-left: auto;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    }
+
+    .reset-btn {
+      margin-left: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #4b5563;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
     .board {
       flex: 1;
-      margin-top: 12px;
       border-radius: 16px;
       background-image: radial-gradient(circle, #e5e7eb 1px, transparent 0);
       background-size: 16px 16px;
@@ -354,13 +221,26 @@
       cursor: default;
     }
 
-    .chat-input-wrap {
-      margin-top: 12px;
-      display: flex;
-      justify-content: center;
+    .group-label {
+      position: absolute;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #4E8CFF;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.18);
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    /* 아래 입력 */
+    .bottom-input-wrap {
+      padding: 0 32px 24px;
     }
 
     .chat-input {
+      margin: 0 auto;
       display: flex;
       align-items: center;
       width: 70%;
@@ -380,8 +260,8 @@
     }
 
     .icon-btn {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 999px;
       border: 1px solid #e5e7eb;
       background: #ffffff;
@@ -389,243 +269,103 @@
       cursor: pointer;
     }
 
-    @media (max-width: 960px) {
-      .stepper {
-        display: none;
+    @media (max-width: 1024px) {
+      .main {
+        flex-direction: column;
+      }
+      .chat-card {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- ⭐ 세로 스텝바 -->
-    <aside class="stepper" id="sidebar">
-      <div class="vertical-step active">
-        <div class="circle"></div>
-        <div class="label">브레인 스토밍</div>
+    <header class="topbar">
+      <div class="logo">Focuspen</div>
+      <div class="page-title">SDR 1주차 과제 글쓰기 – 브레인 스토밍</div>
+      <div class="user-badge">
+        <div class="user-avatar"></div>
+        <span>김지원님</span>
       </div>
+    </header>
 
-      <div class="vertical-step">
-        <div class="circle"></div>
-        <div class="label">계획</div>
-      </div>
-
-      <div class="vertical-step">
-        <div class="circle"></div>
-        <div class="label">초안 작성 및 수정</div>
-      </div>
-
-      <div class="vertical-step">
-        <div class="circle"></div>
-        <div class="label">서론</div>
-      </div>
-
-      <div class="vertical-step">
-        <div class="circle"></div>
-        <div class="label">본론</div>
-      </div>
-
-      <div class="vertical-step">
-        <div class="circle"></div>
-        <div class="label">결론</div>
-      </div>
-
-      <div class="vertical-step">
-        <div class="circle"></div>
-        <div class="label">교정</div>
-      </div>
-
-      <div class="vertical-step">
-        <div class="circle"></div>
-        <div class="label">작성 완료</div>
-      </div>
-
-      <button class="sidebar-toggle" id="sidebarToggle">❯</button>
-      <button class="next-btn"><span>다음 단계</span></button>
-    </aside>
-
-    <!-- ⭐ 오른쪽 메인 -->
     <div class="main">
-      <header class="topbar">
-        <div class="logo">Focuspen</div>
-
-        <div class="timer-wrapper">
-          <div style="position: relative;">
-            <div class="timer-pill" id="timerPill">
-              <span id="timerDisplay">00:00</span>
-              <span class="chevron">▼</span>
-            </div>
-
-            <div class="timer-dropdown" id="timerDropdown">
-              <button class="timer-option" data-min="0">타이머 끄기</button>
-              <button class="timer-option" data-min="5">05:00</button>
-              <button class="timer-option" data-min="10">10:00</button>
-              <button class="timer-option" data-min="15">15:00</button>
-              <button class="timer-option" data-min="25">25:00</button>
-            </div>
-          </div>
-
-          <div class="timer-controls">
-            <button class="timer-btn" id="timerStart">시작</button>
-            <button class="timer-btn" id="timerPause">일시정지</button>
-            <button class="timer-btn" id="timerReset">리셋</button>
-          </div>
-
-          <div class="user-badge">
-            <div class="user-avatar"></div>
-            <span>김지원님</span>
+      <!-- 왼쪽: 챗 영역 -->
+      <section class="chat-card">
+        <div class="chat-card-header">
+          <div class="chat-card-dot"></div>
+          <div class="chat-card-title">포커스펜 AI와 대화 하기</div>
+        </div>
+        <div class="chat-card-body" id="chatPanel">
+          <!-- 초기 안내 메시지 -->
+          <div class="chat-msg bot">
+            브레인스토밍 단계예요. 지금 떠오르는 생각을 편하게 적어보면,
+            오른쪽 보드에 포스트잇으로 쌓아둘게요. 나중에 <중간 정리하기 ✨> 버튼을 누르면
+            비슷한 아이디어끼리 자동으로 묶어서 키워드를 만들어 줄게요.
           </div>
         </div>
-      </header>
+      </section>
 
-      <main class="canvas">
+      <!-- 오른쪽: 보드 -->
+      <section class="right-pane">
         <div class="stage-bar">
           <div class="stage-chip">
             <div class="stage-dot"></div>
             <span>브레인 스토밍</span>
           </div>
+
+          <button class="group-btn" id="groupNotesBtn">중간 정리하기 ✨</button>
+          <button class="reset-btn" id="resetLayoutBtn">원래대로</button>
         </div>
 
-        <div class="content-row">
-          <!-- 왼쪽: 채팅 카드 -->
-          <div class="chat-card" id="chatCard">
-            <div class="chat-card-header" id="chatCardHeader">
-              <div class="chat-card-dot"></div>
-              <div class="chat-card-title">포커스펜 AI와 대화 하기</div>
-              <span class="chat-card-chevron" id="chatCardChevron">⌃</span>
-            </div>
-            <div class="chat-card-body" id="chatCardBody">
-              <div class="chat-panel" id="chatPanel"></div>
-            </div>
-          </div>
+        <div class="board" id="board"></div>
+      </section>
+    </div>
 
-          <!-- 오른쪽: 포스트잇 보드 -->
-          <div class="board"></div>
-        </div>
-
-        <!-- 아래 입력창 -->
-        <div class="chat-input-wrap">
-          <div class="chat-input">
-            <input
-              id="messageInput"
-              type="text"
-              placeholder="포커스 AI에게 궁금한 걸 물어보세요."
-            />
-            <button class="icon-btn" id="addOptionBtn">＋</button>
-            <button class="icon-btn" id="sendMessageBtn">➤</button>
-          </div>
-        </div>
-      </main>
+    <!-- 아래 입력 -->
+    <div class="bottom-input-wrap">
+      <div class="chat-input">
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="포커스 AI에게 궁금한 걸 물어보거나, 떠오르는 생각을 적어보세요."
+        />
+        <button class="icon-btn" id="sendMessageBtn">➤</button>
+      </div>
     </div>
   </div>
 
   <script>
-    // ==== SIDEBAR TOGGLE ====
-    const sidebar = document.getElementById("sidebar");
-    const sidebarToggle = document.getElementById("sidebarToggle");
-
-    sidebarToggle.addEventListener("click", () => {
-      sidebar.classList.toggle("collapsed");
-    });
-
-    // ==== TIMER LOGIC ====
-    const timerPill = document.getElementById("timerPill");
-    const timerDropdown = document.getElementById("timerDropdown");
-    const timerOptions = document.querySelectorAll(".timer-option");
-    const timerDisplay = document.getElementById("timerDisplay");
-    const startBtn = document.getElementById("timerStart");
-    const pauseBtn = document.getElementById("timerPause");
-    const resetBtn = document.getElementById("timerReset");
-
-    let timerDuration = 0;
-    let remaining = 0;
-    let timerId = null;
-    let running = false;
-
-    function formatTime(ms) {
-      const totalSeconds = Math.max(0, Math.floor(ms / 1000));
-      const m = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-      const s = String(totalSeconds % 60).padStart(2, "0");
-      return `${m}:${s}`;
-    }
-
-    function updateDisplay() {
-      timerDisplay.textContent = formatTime(remaining);
-    }
-
-    function clearTimer() {
-      if (timerId) {
-        clearInterval(timerId);
-        timerId = null;
-      }
-      running = false;
-    }
-
-    timerPill.addEventListener("click", (e) => {
-      e.stopPropagation();
-      timerDropdown.classList.toggle("open");
-    });
-
-    timerOptions.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const min = Number(btn.dataset.min);
-        timerDuration = min * 60 * 1000;
-        remaining = timerDuration;
-        clearTimer();
-        updateDisplay();
-        timerDropdown.classList.remove("open");
-      });
-    });
-
-    startBtn.addEventListener("click", () => {
-      if (running) return;
-      if (remaining <= 0) remaining = timerDuration;
-      if (remaining <= 0) return;
-
-      const start = Date.now();
-      const end = start + remaining;
-      running = true;
-
-      timerId = setInterval(() => {
-        const now = Date.now();
-        remaining = end - now;
-        if (remaining <= 0) {
-          remaining = 0;
-          updateDisplay();
-          clearTimer();
-          alert("타이머가 종료되었습니다.");
-        } else {
-          updateDisplay();
-        }
-      }, 200);
-    });
-
-    pauseBtn.addEventListener("click", () => {
-      clearTimer();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      clearTimer();
-      remaining = timerDuration;
-      updateDisplay();
-    });
-
-    // ==== CHAT & NOTES LOGIC ====
-    const board = document.querySelector(".board");
+    // ==============================
+    //  상태 & 기본 유틸
+    // ==============================
+    const board = document.getElementById("board");
+    const chatPanel = document.getElementById("chatPanel");
     const messageInput = document.getElementById("messageInput");
     const sendMessageBtn = document.getElementById("sendMessageBtn");
-    const chatPanel = document.getElementById("chatPanel");
-    const chatCard = document.getElementById("chatCard");
-    const chatCardHeader = document.getElementById("chatCardHeader");
+    const groupNotesBtn = document.getElementById("groupNotesBtn");
+    const resetLayoutBtn = document.getElementById("resetLayoutBtn");
 
-    chatCardHeader.addEventListener("click", () => {
-      chatCard.classList.toggle("collapsed");
-    });
+    // 포스트잇 상태: { id, text, x, y, el, originalX, originalY }
+    let notesState = [];
+    let noteIdSeq = 1;
+    let groupLabels = [];
+
+    function addChatMessage(sender, text) {
+      const msg = document.createElement("div");
+      msg.className = `chat-msg ${sender}`;
+      msg.textContent = text;
+      chatPanel.appendChild(msg);
+      chatPanel.scrollTop = chatPanel.scrollHeight;
+    }
 
     function createNote(text) {
+      const id = `n${noteIdSeq++}`;
       const note = document.createElement("div");
       note.className = "note";
       note.textContent = text;
+      note.dataset.id = id;
 
       board.appendChild(note);
 
@@ -641,17 +381,21 @@
 
       note.style.left = `${x}px`;
       note.style.top = `${y}px`;
+
+      notesState.push({
+        id,
+        text,
+        x,
+        y,
+        originalX: x,
+        originalY: y,
+        el: note,
+      });
     }
 
-    function addChatMessage(sender, text) {
-      if (!chatPanel) return;
-      const msg = document.createElement("div");
-      msg.className = `chat-msg ${sender}`;
-      msg.textContent = text;
-      chatPanel.appendChild(msg);
-      chatPanel.scrollTop = chatPanel.scrollHeight;
-    }
-
+    // ==============================
+    //  챗봇 (간단 버전)
+    // ==============================
     function getBotReply(userText) {
       const t = userText.toLowerCase();
 
@@ -659,23 +403,20 @@
         t.includes("집") ||
         t.includes("집가고") ||
         t.includes("집 가고") ||
-        t.includes("가기 싫") ||
         t.includes("귀찮") ||
-        t.includes("하기 싫")
+        t.includes("하기 싫") ||
+        t.includes("가고 싶")
       ) {
-        return `정신 차리세요! 😠
+        return `집에 가고 싶은 마음 완전 이해돼요. 🥲
 
-방금 우리 브레인스토밍 아이디어들 진짜 잘 나오고 있었잖아요.
-지금은 글쓰기에 집중하는 시간이에요.
+그래도 지금은 글쓰기 아이디어를 쌓아두는 시간이에요.
+지금 떠오르는 생각들만 잘 모아두면,
+나중에 정리할 때 훨씬 수월해질 거예요.
 
-집에 가고 싶은 마음은 너무 공감하지만,
-잠깐만 그 마음을 옆에 내려두고
-지금 이야기하던 아이디어 중에서
-제일 마음에 드는 방향을 하나 골라서
-조금만 더 이어가 보면 어때요?`;
+'그래도 이건 적어볼까?' 싶은 생각 한 가지만 더 적어볼까요?`;
       }
 
-      return "좋아요! 이 아이디어를 나중에 정리할 수 있도록 포스트잇으로도 남겨둘게요. 비슷한 생각이 더 있으면 계속 말해줘!";
+      return "좋아요! 방금 아이디어를 오른쪽 보드에 포스트잇으로 남겨둘게요. 비슷한 생각이 더 떠오르면 계속 적어보세요.";
     }
 
     function handleSendMessage() {
@@ -683,10 +424,7 @@
       if (!text) return;
 
       addChatMessage("user", text);
-
-      if (running) {
-        createNote(text);
-      }
+      createNote(text);
 
       const botText = getBotReply(text);
       addChatMessage("bot", botText);
@@ -695,7 +433,6 @@
     }
 
     sendMessageBtn.addEventListener("click", handleSendMessage);
-
     messageInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
@@ -703,12 +440,180 @@
       }
     });
 
-    document.addEventListener("click", () => {
-      timerDropdown.classList.remove("open");
-    });
+    // ==============================
+    //  그룹 라벨 & 레이아웃
+    // ==============================
+    function clearGroupLabels() {
+      groupLabels.forEach((l) => l.remove());
+      groupLabels = [];
+    }
 
-    remaining = timerDuration;
-    updateDisplay();
+    function resetLayout() {
+      clearGroupLabels();
+      notesState.forEach((n) => {
+        n.el.style.left = `${n.originalX}px`;
+        n.el.style.top = `${n.originalY}px`;
+      });
+    }
+
+    function layoutGroups(groups) {
+      clearGroupLabels();
+
+      const boardRect = board.getBoundingClientRect();
+      const colCount = groups.length;
+      const colWidth = boardRect.width / colCount;
+      const centerTop = 30;
+      const startY = 80;
+      const noteGapY = 120;
+
+      const noteMap = new Map();
+      notesState.forEach((n) => noteMap.set(n.id, n));
+
+      groups.forEach((group, idx) => {
+        const centerX = colWidth * idx + colWidth / 2;
+
+        // 그룹 라벨
+        const label = document.createElement("div");
+        label.className = "group-label";
+        label.textContent = group.themeTitle || `그룹 ${idx + 1}`;
+        label.style.left = `${centerX}px`;
+        label.style.top = `${centerTop}px`;
+        board.appendChild(label);
+        groupLabels.push(label);
+
+        // 이 그룹에 속한 노트들 배치
+        (group.noteIds || []).forEach((id, noteIndex) => {
+          const note = noteMap.get(id);
+          if (!note) return;
+
+          const x = centerX - 90; // 대략적인 카드 폭 고려
+          const y = startY + noteIndex * noteGapY;
+          note.el.style.left = `${x}px`;
+          note.el.style.top = `${y}px`;
+        });
+      });
+    }
+
+    // ==============================
+    //  OpenAI 호출 (노트 그룹화)
+    // ==============================
+
+    // ⚠️ 여기에 본인 OpenAI API 키를 넣어야 함
+    const OPENAI_API_KEY = "YOUR_OPENAI_API_KEY_HERE";
+
+    async function callGroupingAPI(notes) {
+      if (!OPENAI_API_KEY || OPENAI_API_KEY === "YOUR_OPENAI_API_KEY_HERE") {
+        throw new Error("OPENAI_API_KEY가 설정되지 않았습니다.");
+      }
+
+      const notesText = notes
+        .map((n) => `- [${n.id}] ${n.text}`)
+        .join("\n");
+
+      const messages = [
+        {
+          role: "system",
+          content: `You are an AI that organizes brainstorming notes into thematic groups.
+
+You will receive notes in this format:
+- [n1] text...
+- [n2] text...
+
+Your task:
+1. Use every single note ID exactly once. Do not drop or duplicate any note.
+2. Group notes by semantic similarity into 2–6 clusters (if there are fewer than 2 distinct themes, you may still return 1–2 clusters).
+3. For each cluster, return:
+   - themeTitle: 2–5 word concise keyword-style label (no full sentence)
+   - themeSummary: one simple English sentence summarizing the cluster
+   - noteIds: array of note IDs in this cluster
+
+Output ONLY valid JSON with this schema:
+{
+  "groups": [
+    {
+      "themeTitle": "short theme title",
+      "themeSummary": "one-sentence summary",
+      "noteIds": ["n1", "n3"]
+    }
+  ]
+}`,
+        },
+        {
+          role: "user",
+          content: `Group the following notes by semantic similarity. Use every single note exactly once:
+
+${notesText}`,
+        },
+      ];
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "gpt-4.1-mini",
+          messages,
+          response_format: { type: "json_object" },
+        }),
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        console.error("OpenAI error:", errText);
+        throw new Error("AI 그룹화 요청 실패");
+      }
+
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content;
+      if (!content) {
+        throw new Error("AI 응답에 content가 없습니다.");
+      }
+
+      const parsed = JSON.parse(content);
+      return parsed;
+    }
+
+    async function handleGroupNotes() {
+      if (notesState.length < 2) {
+        alert("포스트잇이 2개 이상 있을 때만 중간 정리하기를 사용할 수 있어요.");
+        return;
+      }
+
+      // 로딩 안내 메시지
+      const loadingLabel = document.createElement("div");
+      loadingLabel.className = "group-label";
+      loadingLabel.textContent = "AI가 아이디어를 정리하는 중...";
+      loadingLabel.style.left = "50%";
+      loadingLabel.style.top = "50%";
+      board.appendChild(loadingLabel);
+
+      try {
+        const payloadNotes = notesState.map((n) => ({
+          id: n.id,
+          text: n.text,
+        }));
+
+        const result = await callGroupingAPI(payloadNotes);
+        const groups = result.groups || [];
+        if (!groups.length) {
+          alert("AI가 그룹을 만들지 못했어요. 조금 더 다양한 아이디어를 적어보는 건 어떨까요?");
+          loadingLabel.remove();
+          return;
+        }
+
+        layoutGroups(groups);
+      } catch (err) {
+        console.error(err);
+        alert("그룹화 중 오류가 발생했어요. 콘솔을 확인해 주세요.");
+      } finally {
+        loadingLabel.remove();
+      }
+    }
+
+    groupNotesBtn.addEventListener("click", handleGroupNotes);
+    resetLayoutBtn.addEventListener("click", resetLayout);
   </script>
 </body>
 </html>
