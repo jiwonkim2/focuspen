@@ -27,8 +27,14 @@
 /* 전체 stepper 세로선 */
 .stepper {
   position: relative;
-  padding-top: 20px;
-  padding-left: 40px;
+  width: 220px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  /* 위쪽을 더 띄우고 싶으면 숫자만 조절해도 돼 */
+  padding: 80px 24px 32px;   /* top 80px, left/right 24px, bottom 32px */
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease;;
 }
 
 .stepper::before {
