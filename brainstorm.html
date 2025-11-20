@@ -38,13 +38,25 @@
     .stepper::before {
       content: "";
       position: absolute;
-      left: 48px;
+      left: 14px;
       top: 0;
-      bottom: 0;
+      height: 100%;
       width: 4px;
       background: #e5e7eb;   /* 연회색 라인 */
-      border-radius: 2px;
+      border-radius: 4px;
+      z-index: 0;
     }
+    .step-connector {
+    position: absolute;
+    left: 14px;
+    top: 0;
+    width: 4px;
+    background: #2563eb;
+    border-radius: 4px;
+    z-index: 1;
+    transition: height 0.3s ease;
+    }
+
 
     .vertical-step {
       position: relative;
