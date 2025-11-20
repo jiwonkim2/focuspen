@@ -24,89 +24,81 @@
 
     /* ========== SIDEBAR (세로 스텝바) ========== */
 
-    .stepper {
-      position: relative;
-      width: 220px;
-      background: #ffffff;
-      border-right: 1px solid #e5e7eb;
-      padding: 80px 24px 32px;  /* 위 공간 80px */
-      display: flex;
-      flex-direction: column;
-      transition: width 0.25s ease;
-    }
+    /* ========== SIDEBAR (세로 스텝바) ========== */
 
-    .stepper::before {
-      content: "";
-      position: absolute;
-      left: 14px;
-      top: 0;
-      height: 100%;
-      width: 4px;
-      background: #e5e7eb;   /* 연회색 라인 */
-      border-radius: 4px;
-      z-index: 0;
-    }
-    .step-connector {
-    position: absolute;
-    left: 14px;
-    top: 0;
-    width: 4px;
-    background: #2563eb;
-    border-radius: 4px;
-    z-index: 1;
-    transition: height 0.3s ease;
-    }
+.stepper {
+  position: relative;
+  width: 220px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 80px 24px 32px;  /* 위 공간 80px */
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease;
+}
 
+/* 전체 연한 회색 라인 */
+.stepper::before {
+  content: "";
+  position: absolute;
+  left: 32px;        /* 동그라미 중심 위치랑 맞추기 */
+  top: 80px;         /* 첫 번째 스텝 시작 y 위치 */
+  bottom: 80px;      /* 마지막 스텝 아래 여백 */
+  width: 3px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  z-index: 0;
+}
 
-    .vertical-step {
-      position: relative;
-      margin-bottom: 48px;
-    }
+/* 진행된 부분 파란 라인 (지금은 첫 번째 단계까지) */
+.stepper::after {
+  content: "";
+  position: absolute;
+  left: 32px;
+  top: 80px;
+  height: 72px;      /* 파란 라인 길이 – 필요하면 숫자 조절 */
+  width: 3px;
+  background: #2563eb;
+  border-radius: 999px;
+  z-index: 1;
+}
 
-    .vertical-step:last-child {
-      margin-bottom: 0;
-    }
+/* 각 단계 */
+.vertical-step {
+  position: relative;
+  margin-bottom: 48px;
+}
 
-    .circle {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: white;
-      border: 4px solid #d1d5db; /* 기본 회색 */
-      position: absolute;
-      left: 38px;
-      top: 0;
-      z-index: 3;
-    }
+/* 동그라미 */
+.circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 3px solid #d1d5db;  /* 기본 회색 */
+  position: absolute;
+  left: 23px;                  /* 중심이 x=32px에 오도록 */
+  top: 0;
+  background: #ffffff;
+  z-index: 2;
+}
 
-    .vertical-step.active .circle {
-      border-color: #4e8cff;
-      background: white;
-    }
+/* 활성 단계 동그라미 */
+.vertical-step.active .circle {
+  border-color: #2563eb;
+}
 
-    .vertical-step.active::after {
-      content: "";
-      position: absolute;
-      left: 48px;
-      top: 20px;
-      width: 4px;
-      height: 60px; /* 단계 사이 거리 */
-      background: #4e8cff;
-      border-radius: 2px;
-      z-index: 1;
-    }
+/* 텍스트 */
+.label {
+  font-size: 14px;
+  margin-left: 60px;
+  margin-top: 0;
+  color: #bfc3c9;
+}
 
-    .label {
-      font-size: 16px;
-      margin-left: 60px;
-      margin-top: -2px;
-      color: #bfc3c9;
-    }
-
-    .vertical-step.active .label {
-      font-weight: 600;
-      color: #4e8cff;
-    }
+.vertical-step.active .label {
+  font-weight: 600;
+  color: #2563eb;
+}
 
     /* 접었을 때 텍스트 숨기기 */
     .stepper.collapsed {
