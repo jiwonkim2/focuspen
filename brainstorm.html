@@ -22,119 +22,13 @@
       overflow: hidden;
     }
 
-    /* ========== SIDEBAR ========== */
-
-    .sidebar {
-      position: relative;
-      width: 220px;
-      background: #ffffff;
-      border-right: 1px solid #e5e7eb;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      transition: width 0.25s ease;
-    }
-
-    .sidebar.collapsed {
-      width: 72px;
-    }
-
-    .sidebar-header {
-      font-size: 14px;
-      font-weight: 600;
-      color: #9ca3af;
-      margin-bottom: 24px;
-    }
-
-    .stepper {
-      flex: 1;
-      position: relative;
-    }
-
-   /* 세로 라인 위치 살짝 오른쪽으로, 점 중앙에 맞추기 */
-.step-line {
-  position: absolute;
-  left: 28px;          /* ★ 14 → 28 로 수정 */
-  top: 10px;
-  bottom: 10px;
-  width: 2px;
-  background: #e5e7eb;
-}
-
-/* 파란 막대도 세로 라인이랑 같은 x좌표로 */
-.step.active::after {
-  content: "";
-  position: absolute;
-  left: 28px;          /* ★ 22 → 28 로 수정 (라인이랑 동일하게) */
-  top: 22px;           /* 점 바로 아래부터 시작 */
-  width: 4px;
-  height: 40px;        /* 막대 길이 (필요하면 32~44 사이로 조절) */
-  border-radius: 999px;
-  background: #2563eb;
-}
-
-
-    .step {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-bottom: 24px;
-      z-index: 1;
-    }
-
-    .step:last-child {
-      margin-bottom: 0;
-    }
-
-    .step-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 999px;
-      border: 2px solid #d1d5db;
-      background: #ffffff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 12px;
-      flex-shrink: 0;
-    }
-
-    .step-dot::after {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: transparent;
-    }
-
-    .step.active .step-dot {
-      border-color: #2563eb;
-    }
-
-    .step.active .step-dot::after {
-      background: #2563eb;
-    }
-
-    .step-label {
-      font-size: 13px;
-      color: #9ca3af;
-      white-space: nowrap;
-      opacity: 1;
-      transition: opacity 0.2s ease;
-    }
-
-    .step.active .step-label {
-      color: #111827;
-      font-weight: 500;
-    }
-
-  /* ========== SIDEBAR ========== */
+    /* ========== SIDEBAR (FINAL CLEAN VERSION) ========== */
 
 .sidebar {
   position: relative;
   width: 220px;
   background: #ffffff;
-  border-right: 1px solid #e5e7eb;
+  border-right: 1px solid #EDEEF1;
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
@@ -152,100 +46,75 @@
   margin-bottom: 24px;
 }
 
+/* 전체 세로 라인 */
 .stepper {
-  flex: 1;
   position: relative;
-  padding-top: 4px;
+  flex: 1;
+  padding-left: 56px;
 }
 
-/* 얇은 회색 세로줄 */
-.step-line {
+.stepper::before {
+  content: "";
   position: absolute;
-  left: 14px;
-  top: 10px;
-  bottom: 10px;
+  left: 28px;
+  top: 16px;
+  bottom: 16px;
   width: 2px;
-  background: #e5e7eb;
+  background: #E1E3E8;
 }
 
 /* 각 단계 */
 .step {
   position: relative;
+  padding: 16px 0;
   display: flex;
   align-items: center;
-  margin-bottom: 28px;
-  padding-left: 16px;
 }
 
-.step:last-child {
-  margin-bottom: 0;
-}
-
-/* 회색 작은 점 */
-.step-dot {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  border: 2px solid #d1d5db;
-  background: #ffffff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-/* 안쪽 동그라미 */
-.step-dot::after {
+/* 회색 점 */
+.step::before {
   content: "";
-  width: 10px;
-  height: 10px;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
   border-radius: 999px;
-  background: transparent;
+  border: 2px solid #D1D5DB;
+  background: #ffffff;
 }
 
-/* 활성 단계: 파란 동그라미 */
-.step.active .step-dot {
-  border-color: #2563eb;
+/* 파란 점 + 막대 */
+.step.active::before {
+  border-color: #4E8CFF;
 }
 
-.step.active .step-dot::after {
-  background: #2563eb;
-}
-
-/* 활성 단계: 점 밑으로 내려오는 파란 막대 */
 .step.active::after {
   content: "";
   position: absolute;
-  left: 22px;          /* 세로줄 위치랑 맞추기 */
-  top: 22px;           /* 점 바로 아래부터 시작 */
+  left: 28px;       /* 세로 라인이랑 맞춤 */
+  top: calc(50% + 6px);
   width: 4px;
-  height: 32px;        /* 막대 길이 (조절 가능) */
+  height: 40px;
   border-radius: 999px;
-  background: #2563eb;
+  background: #4E8CFF;
 }
 
-/* 라벨 텍스트 */
+/* 텍스트 */
 .step-label {
-  margin-left: 10px;
-  font-size: 13px;
-  color: #9ca3af;
+  margin-left: 40px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.20);
   white-space: nowrap;
-  opacity: 1;
-  transition: color 0.15s ease, opacity 0.2s ease;
 }
 
-/* 활성 라벨은 파란색 + 볼드 */
 .step.active .step-label {
-  color: #2563eb;
-  font-weight: 600;
+  color: #4E8CFF;
+  font-weight: 500;
 }
 
-.sidebar.collapsed .step-label {
-  opacity: 0;
-}
-
-/* 사이드바 접기 버튼 */
+/* 토글 버튼 */
 .sidebar-toggle {
   position: absolute;
   right: -14px;
@@ -272,24 +141,15 @@
 .next-btn {
   margin-top: 32px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px 16px;
   border-radius: 999px;
   border: none;
-  background: #2563eb;
+  background: #4E8CFF;
   color: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
 }
-
-.sidebar.collapsed .next-btn span {
-  display: none;
-}
-
-.sidebar.collapsed .next-btn::after {
-  content: "▶";
-}
-
 
     /* ========== MAIN CONTENT ========== */
 
