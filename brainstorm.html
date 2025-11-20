@@ -24,12 +24,11 @@
       overflow: hidden;
     }
 
-    /* ========== TOP BAR ========== */
     .topbar {
-      height: 64px;
+      height: 60px;
       background: #ffffff;
       border-bottom: 1px solid #e5e7eb;
-      padding: 0 32px;
+      padding: 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -41,12 +40,6 @@
       color: #2563eb;
     }
 
-    .page-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: #4b5563;
-    }
-
     .user-badge {
       display: flex;
       align-items: center;
@@ -56,23 +49,22 @@
     }
 
     .user-avatar {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 999px;
       background: linear-gradient(135deg, #4f46e5, #60a5fa);
     }
 
-    /* ========== MAIN ROW ========== */
     .main {
       flex: 1;
       display: flex;
-      padding: 24px 32px 32px;
-      gap: 24px;
+      padding: 16px 24px 24px;
+      gap: 20px;
     }
 
-    /* 왼쪽: 챗 패널 (심플 버전) */
+    /* 왼쪽 챗 카드 */
     .chat-card {
-      width: 420px;
+      width: 380px;
       background: #ffffff;
       border-radius: 16px;
       border: 1px solid #e5e7eb;
@@ -83,16 +75,16 @@
     }
 
     .chat-card-header {
-      padding: 12px 18px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       border-bottom: 1px solid #e5e7eb;
     }
 
     .chat-card-dot {
-      width: 26px;
-      height: 26px;
+      width: 22px;
+      height: 22px;
       border-radius: 999px;
       background: linear-gradient(135deg, #4f46e5, #60a5fa);
     }
@@ -100,11 +92,10 @@
     .chat-card-title {
       font-size: 14px;
       font-weight: 500;
-      color: #111827;
     }
 
     .chat-card-body {
-      padding: 12px 16px 16px;
+      padding: 10px 14px 14px;
       flex: 1;
       overflow-y: auto;
     }
@@ -134,62 +125,40 @@
       border-bottom-left-radius: 4px;
     }
 
-    /* 오른쪽: 보드 + 상단 바 */
-    .right-pane {
+    /* 오른쪽 보드 영역 */
+    .right {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .stage-bar {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .stage-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: #e3edff;
-      border: 1px solid #c4d7ff;
-      font-size: 13px;
-      color: #111827;
-      min-width: 220px;
-    }
-
-    .stage-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #4f46e5, #60a5fa);
+      justify-content: center;
+      gap: 10px;
     }
 
     .group-btn {
-      margin-left: auto;
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 999px;
       border: none;
       background: #2563eb;
       color: #ffffff;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
     }
 
     .reset-btn {
-      margin-left: 8px;
       padding: 8px 14px;
       border-radius: 999px;
       border: 1px solid #d1d5db;
       background: #ffffff;
       color: #4b5563;
       font-size: 12px;
-      font-weight: 500;
       cursor: pointer;
     }
 
@@ -218,7 +187,6 @@
       color: #111827;
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
       line-height: 1.4;
-      cursor: default;
     }
 
     .group-label {
@@ -234,9 +202,8 @@
       white-space: nowrap;
     }
 
-    /* 아래 입력 */
-    .bottom-input-wrap {
-      padding: 0 32px 24px;
+    .bottom-input {
+      padding: 0 24px 20px;
     }
 
     .chat-input {
@@ -283,7 +250,7 @@
   <div class="app">
     <header class="topbar">
       <div class="logo">Focuspen</div>
-      <div class="page-title">SDR 1주차 과제 글쓰기 – 브레인 스토밍</div>
+      <div>SDR 1주차 과제 – 브레인스토밍</div>
       <div class="user-badge">
         <div class="user-avatar"></div>
         <span>김지원님</span>
@@ -291,45 +258,36 @@
     </header>
 
     <div class="main">
-      <!-- 왼쪽: 챗 영역 -->
+      <!-- 왼쪽: 챗 -->
       <section class="chat-card">
         <div class="chat-card-header">
           <div class="chat-card-dot"></div>
           <div class="chat-card-title">포커스펜 AI와 대화 하기</div>
         </div>
         <div class="chat-card-body" id="chatPanel">
-          <!-- 초기 안내 메시지 -->
           <div class="chat-msg bot">
-            브레인스토밍 단계예요. 지금 떠오르는 생각을 편하게 적어보면,
-            오른쪽 보드에 포스트잇으로 쌓아둘게요. 나중에 <중간 정리하기 ✨> 버튼을 누르면
-            비슷한 아이디어끼리 자동으로 묶어서 키워드를 만들어 줄게요.
+            떠오르는 생각을 편하게 적으면 오른쪽에 포스트잇으로 쌓아둘게요.
+            아이디어가 좀 모이면 위에 <중간 정리하기 ✨> 버튼을 눌러 보세요.
           </div>
         </div>
       </section>
 
-      <!-- 오른쪽: 보드 -->
-      <section class="right-pane">
+      <!-- 오른쪽: 포스트잇 보드 -->
+      <section class="right">
         <div class="stage-bar">
-          <div class="stage-chip">
-            <div class="stage-dot"></div>
-            <span>브레인 스토밍</span>
-          </div>
-
           <button class="group-btn" id="groupNotesBtn">중간 정리하기 ✨</button>
           <button class="reset-btn" id="resetLayoutBtn">원래대로</button>
         </div>
-
         <div class="board" id="board"></div>
       </section>
     </div>
 
-    <!-- 아래 입력 -->
-    <div class="bottom-input-wrap">
+    <div class="bottom-input">
       <div class="chat-input">
         <input
           id="messageInput"
           type="text"
-          placeholder="포커스 AI에게 궁금한 걸 물어보거나, 떠오르는 생각을 적어보세요."
+          placeholder="떠오르는 생각을 적어보세요. 엔터를 누르면 포스트잇이 생겨요."
         />
         <button class="icon-btn" id="sendMessageBtn">➤</button>
       </div>
@@ -337,9 +295,6 @@
   </div>
 
   <script>
-    // ==============================
-    //  상태 & 기본 유틸
-    // ==============================
     const board = document.getElementById("board");
     const chatPanel = document.getElementById("chatPanel");
     const messageInput = document.getElementById("messageInput");
@@ -347,8 +302,7 @@
     const groupNotesBtn = document.getElementById("groupNotesBtn");
     const resetLayoutBtn = document.getElementById("resetLayoutBtn");
 
-    // 포스트잇 상태: { id, text, x, y, el, originalX, originalY }
-    let notesState = [];
+    let notesState = []; // { id, text, x, y, originalX, originalY, el }
     let noteIdSeq = 1;
     let groupLabels = [];
 
@@ -366,7 +320,6 @@
       note.className = "note";
       note.textContent = text;
       note.dataset.id = id;
-
       board.appendChild(note);
 
       const boardRect = board.getBoundingClientRect();
@@ -375,7 +328,6 @@
       const margin = 40;
       const maxX = boardRect.width - noteRect.width - margin;
       const maxY = boardRect.height - noteRect.height - margin;
-
       const x = margin + Math.max(0, Math.random() * maxX);
       const y = margin + Math.max(0, Math.random() * maxY);
 
@@ -393,30 +345,19 @@
       });
     }
 
-    // ==============================
-    //  챗봇 (간단 버전)
-    // ==============================
     function getBotReply(userText) {
       const t = userText.toLowerCase();
-
       if (
         t.includes("집") ||
-        t.includes("집가고") ||
-        t.includes("집 가고") ||
+        t.includes("가기 싫") ||
         t.includes("귀찮") ||
-        t.includes("하기 싫") ||
         t.includes("가고 싶")
       ) {
         return `집에 가고 싶은 마음 완전 이해돼요. 🥲
-
-그래도 지금은 글쓰기 아이디어를 쌓아두는 시간이에요.
-지금 떠오르는 생각들만 잘 모아두면,
-나중에 정리할 때 훨씬 수월해질 거예요.
-
-'그래도 이건 적어볼까?' 싶은 생각 한 가지만 더 적어볼까요?`;
+그래도 지금은 아이디어를 모아두는 시간이니까,
+'그래도 이건 적어볼까?' 싶은 생각 한 가지만 더 떠올려보면 어때요?`;
       }
-
-      return "좋아요! 방금 아이디어를 오른쪽 보드에 포스트잇으로 남겨둘게요. 비슷한 생각이 더 떠오르면 계속 적어보세요.";
+      return "좋아요! 방금 아이디어를 포스트잇으로 보드에 남겨둘게요. 비슷한 생각이 더 있으면 계속 적어보세요.";
     }
 
     function handleSendMessage() {
@@ -425,10 +366,7 @@
 
       addChatMessage("user", text);
       createNote(text);
-
-      const botText = getBotReply(text);
-      addChatMessage("bot", botText);
-
+      addChatMessage("bot", getBotReply(text));
       messageInput.value = "";
     }
 
@@ -440,9 +378,6 @@
       }
     });
 
-    // ==============================
-    //  그룹 라벨 & 레이아웃
-    // ==============================
     function clearGroupLabels() {
       groupLabels.forEach((l) => l.remove());
       groupLabels = [];
@@ -462,9 +397,9 @@
       const boardRect = board.getBoundingClientRect();
       const colCount = groups.length;
       const colWidth = boardRect.width / colCount;
-      const centerTop = 30;
-      const startY = 80;
-      const noteGapY = 120;
+      const topLabelY = 20;
+      const startY = 70;
+      const gapY = 110;
 
       const noteMap = new Map();
       notesState.forEach((n) => noteMap.set(n.id, n));
@@ -472,33 +407,26 @@
       groups.forEach((group, idx) => {
         const centerX = colWidth * idx + colWidth / 2;
 
-        // 그룹 라벨
         const label = document.createElement("div");
         label.className = "group-label";
         label.textContent = group.themeTitle || `그룹 ${idx + 1}`;
         label.style.left = `${centerX}px`;
-        label.style.top = `${centerTop}px`;
+        label.style.top = `${topLabelY}px`;
         board.appendChild(label);
         groupLabels.push(label);
 
-        // 이 그룹에 속한 노트들 배치
-        (group.noteIds || []).forEach((id, noteIndex) => {
+        (group.noteIds || []).forEach((id, i) => {
           const note = noteMap.get(id);
           if (!note) return;
-
-          const x = centerX - 90; // 대략적인 카드 폭 고려
-          const y = startY + noteIndex * noteGapY;
+          const x = centerX - 90;
+          const y = startY + i * gapY;
           note.el.style.left = `${x}px`;
           note.el.style.top = `${y}px`;
         });
       });
     }
 
-    // ==============================
-    //  OpenAI 호출 (노트 그룹화)
-    // ==============================
-
-    // ⚠️ 여기에 본인 OpenAI API 키를 넣어야 함
+    // ⚠️ 여기에 너 OpenAI API 키 넣어야 함
     const OPENAI_API_KEY = "YOUR_OPENAI_API_KEY_HERE";
 
     async function callGroupingAPI(notes) {
@@ -506,34 +434,21 @@
         throw new Error("OPENAI_API_KEY가 설정되지 않았습니다.");
       }
 
-      const notesText = notes
-        .map((n) => `- [${n.id}] ${n.text}`)
-        .join("\n");
+      const notesText = notes.map((n) => `- [${n.id}] ${n.text}`).join("\n");
 
       const messages = [
         {
           role: "system",
-          content: `You are an AI that organizes brainstorming notes into thematic groups.
+          content: `You are an AI that groups brainstorming sticky notes.
 
-You will receive notes in this format:
-- [n1] text...
-- [n2] text...
-
-Your task:
-1. Use every single note ID exactly once. Do not drop or duplicate any note.
-2. Group notes by semantic similarity into 2–6 clusters (if there are fewer than 2 distinct themes, you may still return 1–2 clusters).
-3. For each cluster, return:
-   - themeTitle: 2–5 word concise keyword-style label (no full sentence)
-   - themeSummary: one simple English sentence summarizing the cluster
-   - noteIds: array of note IDs in this cluster
-
-Output ONLY valid JSON with this schema:
+Use every note ID exactly once. Do not drop or duplicate IDs.
+Return JSON only in this form:
 {
   "groups": [
     {
-      "themeTitle": "short theme title",
-      "themeSummary": "one-sentence summary",
-      "noteIds": ["n1", "n3"]
+      "themeTitle": "short theme title (2-5 words)",
+      "themeSummary": "one simple sentence",
+      "noteIds": ["n1","n2"]
     }
   ]
 }`,
@@ -546,7 +461,7 @@ ${notesText}`,
         },
       ];
 
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${OPENAI_API_KEY}`,
@@ -559,20 +474,16 @@ ${notesText}`,
         }),
       });
 
-      if (!response.ok) {
-        const errText = await response.text();
-        console.error("OpenAI error:", errText);
+      if (!res.ok) {
+        const t = await res.text();
+        console.error("OpenAI error:", t);
         throw new Error("AI 그룹화 요청 실패");
       }
 
-      const data = await response.json();
+      const data = await res.json();
       const content = data.choices?.[0]?.message?.content;
-      if (!content) {
-        throw new Error("AI 응답에 content가 없습니다.");
-      }
-
-      const parsed = JSON.parse(content);
-      return parsed;
+      if (!content) throw new Error("AI 응답이 비어 있습니다.");
+      return JSON.parse(content);
     }
 
     async function handleGroupNotes() {
@@ -581,34 +492,27 @@ ${notesText}`,
         return;
       }
 
-      // 로딩 안내 메시지
-      const loadingLabel = document.createElement("div");
-      loadingLabel.className = "group-label";
-      loadingLabel.textContent = "AI가 아이디어를 정리하는 중...";
-      loadingLabel.style.left = "50%";
-      loadingLabel.style.top = "50%";
-      board.appendChild(loadingLabel);
+      const loading = document.createElement("div");
+      loading.className = "group-label";
+      loading.textContent = "AI가 정리 중...";
+      loading.style.left = "50%";
+      loading.style.top = "50%";
+      board.appendChild(loading);
 
       try {
-        const payloadNotes = notesState.map((n) => ({
-          id: n.id,
-          text: n.text,
-        }));
-
-        const result = await callGroupingAPI(payloadNotes);
+        const payload = notesState.map((n) => ({ id: n.id, text: n.text }));
+        const result = await callGroupingAPI(payload);
         const groups = result.groups || [];
         if (!groups.length) {
-          alert("AI가 그룹을 만들지 못했어요. 조금 더 다양한 아이디어를 적어보는 건 어떨까요?");
-          loadingLabel.remove();
-          return;
+          alert("AI가 그룹을 만들지 못했어요. 아이디어를 조금만 더 늘려볼까요?");
+        } else {
+          layoutGroups(groups);
         }
-
-        layoutGroups(groups);
       } catch (err) {
         console.error(err);
         alert("그룹화 중 오류가 발생했어요. 콘솔을 확인해 주세요.");
       } finally {
-        loadingLabel.remove();
+        loading.remove();
       }
     }
 
