@@ -24,81 +24,77 @@
 
     /* ========== SIDEBAR (FINAL CLEAN VERSION) ========== */
 
-.sidebar {
-  position: relative;
-  width: 220px;
-  background: #ffffff;
-  border-right: 1px solid #EDEEF1;
-  padding: 32px 24px;
-  display: flex;
-  flex-direction: column;
-  transition: width 0.25s ease;
-}
-
-.sidebar.collapsed {
-  width: 72px;
-}
-
-.sidebar-header {
-  font-size: 14px;
-  font-weight: 600;
-  color: #9ca3af;
-  margin-bottom: 24px;
-}
-
-/* 전체 세로 라인 */
+/* 전체 stepper 세로선 */
 .stepper {
   position: relative;
-  flex: 1;
+  padding-top: 20px;
   padding-left: 40px;
 }
 
 .stepper::before {
   content: "";
   position: absolute;
-  left: 20px;
-  top: 16px;
-  bottom: 16px;
-  width: 2px;
-  background: #E1E3E8;
+  left: 48px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #e5e7eb;   /* 연회색 라인 */
+  border-radius: 2px;
 }
 
 /* 각 단계 */
-.step {
+.vertical-step {
   position: relative;
-  padding: 16px 0;
-  display: flex;
-  align-items: center;
+  margin-bottom: 48px;
 }
 
-/* 회색 점 */
-.step::before {
+.vertical-step:last-child {
+  margin-bottom: 0;
+}
+
+/* 원형 점 */
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid #d1d5db; /* 기본 회색 */
+  position: absolute;
+  left: 38px;
+  top: 0;
+  z-index: 3;
+}
+
+/* 파란 진행중 단계 */
+.vertical-step.active .circle {
+  border-color: #4e8cff;
+  background: white;
+}
+
+/* active 아래로 내려오는 파란 막대 */
+.vertical-step.active::after {
   content: "";
   position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  border-radius: 999px;
-  border: 2px solid #D1D5DB;
-  background: #ffffff;
-}
-
-/* 파란 점 + 막대 */
-.step.active::before {
-  border-color: #4E8CFF;
-}
-
-.step.active::after {
-  content: "";
-  position: absolute;
-  left: 28px;       /* 세로 라인이랑 맞춤 */
-  top: calc(50% + 6px);
+  left: 48px;
+  top: 20px;
   width: 4px;
-  height: 40px;
-  border-radius: 999px;
-  background: #4E8CFF;
+  height: 60px; /* 단계 사이 거리 */
+  background: #4e8cff;
+  border-radius: 2px;
+  z-index: 1;
+}
+
+/* 라벨 텍스트 */
+.label {
+  font-size: 16px;
+  margin-left: 60px;
+  margin-top: -2px;
+  color: #bfc3c9;
+}
+
+.vertical-step.active .label {
+  font-weight: 600;
+  color: #4e8cff;
 }
 
 /* 텍스트 */
@@ -497,47 +493,50 @@
   </style>
 </head>
 <body>
-  <div class="app">
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">작성 단계</div>
+  <div class="stepper">
+  
+  <div class="step vertical-step active">
+    <div class="circle"></div>
+    <div class="label">브레인 스토밍</div>
+  </div>
 
-      <div class="stepper">
-        <div class="step-line"></div>
+  <div class="step vertical-step">
+    <div class="circle"></div>
+    <div class="label">계획</div>
+  </div>
 
-        <div class="step active">
-          <div class="step-dot"></div>
-          <div class="step-label">브레인 스토밍</div>
-        </div>
-        <div class="step">
-          <div class="step-dot"></div>
-          <div class="step-label">계획</div>
-        </div>
-        <div class="step">
-          <div class="step-dot"></div>
-          <div class="step-label">초안 작성 및 수정</div>
-        </div>
-        <div class="step">
-          <div class="step-dot"></div>
-          <div class="step-label">서론</div>
-        </div>
-        <div class="step">
-          <div class="step-dot"></div>
-          <div class="step-label">본론</div>
-        </div>
-        <div class="step">
-          <div class="step-dot"></div>
-          <div class="step-label">결론</div>
-        </div>
-        <div class="step">
-          <div class="step-dot"></div>
-          <div class="step-label">교정</div>
-        </div>
-        <div class="step">
-          <div class="step-dot"></div>
-          <div class="step-label">작성 완료</div>
-        </div>
-      </div>
+  <div class="step vertical-step">
+    <div class="circle"></div>
+    <div class="label">초안 작성 및 수정</div>
+  </div>
+
+  <div class="step vertical-step">
+    <div class="circle"></div>
+    <div class="label">서론</div>
+  </div>
+
+  <div class="step vertical-step">
+    <div class="circle"></div>
+    <div class="label">본론</div>
+  </div>
+
+  <div class="step vertical-step">
+    <div class="circle"></div>
+    <div class="label">결론</div>
+  </div>
+
+  <div class="step vertical-step">
+    <div class="circle"></div>
+    <div class="label">교정</div>
+  </div>
+
+  <div class="step vertical-step">
+    <div class="circle"></div>
+    <div class="label">작성 완료</div>
+  </div>
+
+</div>
+
 
       <button class="sidebar-toggle" id="sidebarToggle">❯</button>
 
