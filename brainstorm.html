@@ -51,14 +51,28 @@
       position: relative;
     }
 
-    .step-line {
-      position: absolute;
-      left: 14px;
-      top: 8px;
-      bottom: 52px;
-      border-left: 2px solid #e5e7eb;
-      z-index: 0;
-    }
+   /* 세로 라인 위치 살짝 오른쪽으로, 점 중앙에 맞추기 */
+.step-line {
+  position: absolute;
+  left: 28px;          /* ★ 14 → 28 로 수정 */
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+/* 파란 막대도 세로 라인이랑 같은 x좌표로 */
+.step.active::after {
+  content: "";
+  position: absolute;
+  left: 28px;          /* ★ 22 → 28 로 수정 (라인이랑 동일하게) */
+  top: 22px;           /* 점 바로 아래부터 시작 */
+  width: 4px;
+  height: 40px;        /* 막대 길이 (필요하면 32~44 사이로 조절) */
+  border-radius: 999px;
+  background: #2563eb;
+}
+
 
     .step {
       position: relative;
